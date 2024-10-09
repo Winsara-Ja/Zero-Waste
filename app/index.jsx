@@ -6,8 +6,8 @@ import React from 'react'
 const index = () => {
     return (
         <View style={styles.container}>
-            <Text className="text-3xl font-SpaceMono">Zero Waste</Text>
-            <Link href="/home">Go to Profile</Link>
+            <Text className="text-3xl font-SpaceMono mb-20">Zero Waste</Text>
+            <Link href="/home" className='mb-10 text-2xl'>Go to Home</Link>
         </View>
     )
 }
