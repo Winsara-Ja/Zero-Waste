@@ -40,7 +40,7 @@ const Home = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Welcome to the Garbage Management System</Text>
+            <Text style={styles.title}>Home</Text>
 
             {/* Fading image */}
             <Animated.View style={{ opacity: fadeAnim }}>

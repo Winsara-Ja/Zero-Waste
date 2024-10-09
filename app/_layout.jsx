@@ -5,22 +5,22 @@ import { useFonts } from 'expo-font';
 SplashScreen.preventAutoHideAsync();
 
 export default function TabLayout() {
-
     const [fontsLoaded, error] = useFonts({
         "SpaceMono": require('../assets/fonts/SpaceMono-Regular.ttf'),
         "RighteousRegular": require('../assets/fonts/Righteous-Regular.ttf'),
-    })
+    });
 
     useEffect(() => {
         if (error) throw error;
         if (fontsLoaded) SplashScreen.hideAsync();
-    }, [fontsLoaded, error])
+    }, [fontsLoaded, error]);
 
     if (!fontsLoaded) return null;
 
     return (
-        <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" />
+            {/* Add other screens here if needed */}
         </Stack>
-    )
+    );
 }

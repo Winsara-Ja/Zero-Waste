@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import GarbageNamePicker from '../components/GarbageNamePicker'; // Adjust path
 import { getDocs, collection } from 'firebase/firestore';
@@ -52,6 +52,11 @@ const MyComponent = ({ navigation }) => {
             style={styles.gifImage}
           />
         </TouchableOpacity>
+
+        {/* Add text under the GIF */}
+        <Text style={styles.gifText}>
+          Need help?
+        </Text>
 
         {/* Garbage Picker */}
         <GarbageNamePicker
@@ -112,8 +117,16 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     position: 'absolute',
-    top: -40,
+    top: 0,
     right: -50,
+  },
+  gifText: {
+    fontSize: 20,
+    color: 'black',
+    position: 'absolute',
+    top: 190, // Position it below the GIF image
+    right: 20,
+    textAlign: 'center',
   },
   selectedText: {
     marginTop: 20,
@@ -134,7 +147,7 @@ const styles = StyleSheet.create({
     width: '135%',
     height: 300, // Adjust image size as needed
     marginTop: 20,
-    marginStart:-60,
+    marginStart: -60,
     resizeMode: 'contain',
   },
 });

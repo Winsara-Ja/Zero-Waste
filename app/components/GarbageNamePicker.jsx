@@ -85,7 +85,7 @@ const GarbageNamePicker = ({ selectedGarbage, onGarbageChange }) => {
 const styles = StyleSheet.create({
   container: {
     margin: 20,
-    paddingTop: 200,
+    paddingTop: 300,
     marginBottom: 50,
     width:320,
     marginStart:-20
