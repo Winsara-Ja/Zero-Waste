@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler'; // Import GestureHandlerRootView
 import { Slot, SplashScreen, Stack } from 'expo-router';
 import { useFonts } from 'expo-font';
 
@@ -18,9 +19,11 @@ export default function TabLayout() {
     if (!fontsLoaded) return null;
 
     return (
-        <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="index" />
-            {/* Add other screens here if needed */}
-        </Stack>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <Stack screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="index" />
+                {/* Add other screens here if needed */}
+            </Stack>
+        </GestureHandlerRootView>
     );
 }
