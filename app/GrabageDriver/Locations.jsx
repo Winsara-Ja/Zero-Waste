@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ActivityIndicator, Alert, Text } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { collection, getDocs } from 'firebase/firestore';
-import { FIREBASE_DB } from '../firebaseConfig';
+import { FIREBASE_DB } from '../../firebaseConfig';
 
 const Locations = () => {
     const [locations, setLocations] = useState([]);
@@ -24,18 +24,21 @@ const Locations = () => {
                     ...doc.data(),
                 }));
 
-                if (locationData.length > 0) {
-                    setLocations(locationData);
+                // Filter locations to include only pending bins
+                const pendingLocations = locationData.filter(location => location.status === 'pending');
 
-                    // Set initial region to the first location
+                if (pendingLocations.length > 0) {
+                    setLocations(pendingLocations);
+
+                    // Set initial region to the first pending location
                     setInitialRegion({
-                        latitude: locationData[0].latitude,
-                        longitude: locationData[0].longitude,
+                        latitude: pendingLocations[0].latitude,
+                        longitude: pendingLocations[0].longitude,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421,
                     });
                 } else {
-                    Alert.alert('No locations found', 'No saved locations to display on the map.');
+                    Alert.alert('No pending locations found', 'No pending bins to display on the map.');
                 }
             } catch (error) {
                 console.error('Error fetching locations: ', error);
@@ -66,8 +69,9 @@ const Locations = () => {
                         >
                             <Callout>
                                 <View style={styles.callout}>
-                                    <Text style={{ fontWeight: 'bold' }}>Name: {location.Name}</Text>
-                                    <Text>Waste Type: {location.Type}</Text>
+                                    <Text style={{ fontWeight: 'bold' }}>ID: {location.id}</Text>
+                                    <Text style={{ fontWeight: 'bold' }}>Name: {location.user_name}</Text>
+                                    <Text>Waste Type: {location.waste_type}</Text>
                                     <Text>Weight: {location.weight}</Text>
                                     <Text>Date: {new Date(location.timestamp).toLocaleDateString()}</Text>
                                     <Text>Time: {new Date(location.timestamp).toLocaleTimeString()}</Text>
