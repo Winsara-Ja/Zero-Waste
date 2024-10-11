@@ -2,18 +2,19 @@
 import { collection, doc, addDoc, getDocs, setDoc, updateDoc, deleteDoc, query, where } from 'firebase/firestore';
 import { FIREBASE_DB } from '../firebaseConfig';
 
-export const storeUserLocation = async (latitude, longitude, bin_id, name, waste_type, waste_level, weight, status, user_name) => {
+export const storeUserLocation = async (latitude, longitude, bin_id, name, waste_type, weight, waste_level, status, user_name, userId) => {
     try {
         await addDoc(collection(FIREBASE_DB, 'scheduledBins'), {
-            latitude,
-            longitude,
             bin_id,
             name,
+            userId,
             user_name,
             waste_type,
             waste_level,
-            status,
             weight,
+            status,
+            latitude,
+            longitude,
             timestamp: new Date().toISOString(),
         });
     } catch (error) {
@@ -42,6 +43,7 @@ export const saveAcceptedPickup = async (pickup) => {
         const pickupDocRef = doc(FIREBASE_DB, 'acceptedPickups', pickup.id);
         await setDoc(pickupDocRef, {
             id: pickup.id,
+            user_name: pickup.user_name,
             binId: pickup.bin_id, // Ensure this is defined
             weight: pickup.weight,
             acceptedAt: new Date().toISOString(),

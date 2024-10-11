@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Alert, StyleSheet } from 'react-native';
-import { getPendingPickups, updatePickupStatus, saveAcceptedPickup } from './firebaseService'; // Functions for interacting with Firestore
+import { getPendingPickups, updatePickupStatus, saveAcceptedPickup } from '../firebaseService'; // Functions for interacting with Firestore
 import { useNavigation } from '@react-navigation/native';
 
 const DriverPickupList = () => {
@@ -24,6 +24,10 @@ const DriverPickupList = () => {
     const goToLocations = () => {
         navigation.navigate('Locations');
     };
+
+    const goToPickups = () => {
+        navigation.navigate('CollectedGarbage');
+    }
 
     // Handle accept action
     const handleAccept = async (pickup) => {
@@ -53,7 +57,7 @@ const DriverPickupList = () => {
             <Text style={styles.text}>ID: {item.id}</Text>
             <Text style={styles.text}>User Name: {item.user_name}</Text>
             <Text style={styles.text}>Bin Name: {item.name}</Text>
-            <Text style={styles.text}>Waste Type: {item.wasteType}</Text>
+            <Text style={styles.text}>Waste Type: {item.waste_type}</Text>
             <Text style={styles.text}>Weight: {item.weight}</Text>
             <Text style={styles.text}>Waste Level: {item.wasteLevel}</Text>
 
@@ -72,7 +76,10 @@ const DriverPickupList = () => {
         <>
             <View>
                 <TouchableOpacity style={styles.navigateButton} onPress={goToLocations}>
-                    <Text style={styles.navigateButtonText}>Go to Garbage</Text>
+                    <Text style={styles.navigateButtonText}>Go to Location</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navigateButton} onPress={goToPickups}>
+                    <Text style={styles.navigateButtonText}>View all Pickups</Text>
                 </TouchableOpacity>
             </View>
             <FlatList

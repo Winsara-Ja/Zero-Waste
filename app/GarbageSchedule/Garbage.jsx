@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore'; // Import deleteDoc and doc
-import { FIREBASE_DB } from '../firebaseConfig';
-import { useUser } from './UserContext';
+import { FIREBASE_DB } from '../../firebaseConfig';
+import { useUser } from '../UserContext';
 
 const Garbage = () => {
     const [locations, setLocations] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const { user } = useUser();
+    const { user, userId } = useUser();
 
     // Fetch locations from Firestore
     useEffect(() => {
@@ -19,7 +19,14 @@ const Garbage = () => {
                     id: doc.id,
                     ...doc.data(),
                 }));
-                setLocations(locationData);
+
+                const filteredData = user ? locationData.filter(item => item.userId === userId) : [];
+
+                if (filteredData.length > 0) {
+                    setLocations(filteredData);
+                } else {
+                    console.log('No collected garbage found for the current user.');
+                }
             } catch (error) {
                 console.error('Error fetching locations: ', error);
             } finally {
@@ -45,8 +52,8 @@ const Garbage = () => {
         <View style={styles.itemContainer}>
             <Text style={styles.itemText}>Bin ID: {item.bin_id}</Text>
             <Text style={styles.itemText}>Name: {user.name}</Text>
-            <Text style={styles.itemText}>Type: {item.Type}</Text>
-            <Text style={styles.itemText}>Weight: {item.weight}Kg</Text>
+            <Text style={styles.itemText}>Type: {item.waste_type}</Text>
+            <Text style={styles.itemText}>Weight: {item.weight}</Text>
             <Text style={styles.itemText}>Date: {new Date(item.timestamp).toLocaleDateString()}</Text>
             <Text style={styles.itemText}>Time: {new Date(item.timestamp).toLocaleTimeString()}</Text>
 

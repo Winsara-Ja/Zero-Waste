@@ -6,14 +6,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';  // Correct import for stack navigator
 import { UserProvider } from './UserContext';
 
-import GarbageBinList from './GarbageBinList';
-import Garbage from './Garbage';
-import Locations from './Locations';
-import Schedule from './Schedule';
-import DriverPickupList from './Accept';
+import GarbageBinList from './GarbageSchedule/GarbageBinList';
+import CollectedGarbage from './GrabageDriver/CollectedGarbage';
+import Garbage from './GarbageSchedule/Garbage';
+import Locations from './GrabageDriver/Locations';
+import Schedule from './GarbageSchedule/Schedule';
+import DriverPickupList from './GrabageDriver/Accept';
 import LoginScreen from './LogInScreen';
 import SignUpScreen from './SignUpScreen';
 import CurrentUserProfile from './ProfileScreen';
+
 
 import Home from './home'
 import GarbageSortPage from './GarbageSort/GarbageSortPage'
@@ -24,6 +26,15 @@ import Step4 from './GarbageSort/Step4'
 import Step5 from './GarbageSort/Step5'
 import Add from './GarbageSort/addStep'
 
+import DailyTracking from './wasteTracking/DailyTracking';
+import WeeklyTracking from './wasteTracking/WeeklyTracking';
+import MonthlyTracking from './wasteTracking/MonthlyTracking';
+import MonthlyReport from './wasteTracking/MonthlyReport';
+import MyQuestions from './wasteTracking/MyQuestions';
+import Questions from './wasteTracking/Questions';
+import Tips from './wasteTracking/Tips';
+
+
 // Correct usage of createBottomTabNavigator and createStackNavigator from @react-navigation/stack
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -32,10 +43,16 @@ const Stack = createStackNavigator();
 function TabsLayout() {
     return (
         <Tab.Navigator screenOptions={{ headerShown: false }}>
+
             <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="GarbageBinList" component={StackLayout} />
-            <Tab.Screen name="DriverPickupList" component={StackLayout3} />
+         
+
+            <Tab.Screen name="DailyTracking" component={StackLayout} />
+            <Tab.Screen name="DriverPickupList" component={DriverStackLayout} />
+            <Tab.Screen name="Q/A & Tips" component={StackLayout4} />
+
             <Tab.Screen name="Profile" component={StackLayout2} />
+            
         </Tab.Navigator>
     );
 }
@@ -44,8 +61,9 @@ function TabsLayout() {
 function StackLayout() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="GarbageBins" component={GarbageBinList} options={{ headerShown: false }} />
+            <Stack.Screen name="DailyTracking" component={DailyTracking} options={{ headerShown: false }} />
             <Stack.Screen name="Schedule" component={Schedule} />
+
             <Stack.Screen name="GarbageBins" component={GarbageBinList} options={{ headerShown: false }} />
             <Stack.Screen name="Schedule" component={Schedule} />
             <Stack.Screen name="GarbageSort" component={GarbageSortPage} />
@@ -55,6 +73,11 @@ function StackLayout() {
             <Stack.Screen name="Step4" component={Step4} />
             <Stack.Screen name="Step5" component={Step5} />
             <Stack.Screen name="AddStep" component={Add} />
+
+            <Stack.Screen name="WeeklyTracking" component={WeeklyTracking} />
+            <Stack.Screen name="MonthlyTracking" component={MonthlyTracking} />
+            <Stack.Screen name="MonthlyReport" component={MonthlyReport} />
+
         </Stack.Navigator>
     );
 }
@@ -68,11 +91,22 @@ function StackLayout2() {
     );
 }
 
-function StackLayout3() {
+function DriverStackLayout() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="PickupList" component={DriverPickupList} options={{ headerShown: false }} />
             <Stack.Screen name="Locations" component={Locations} />
+            <Stack.Screen name="CollectedGarbage" component={CollectedGarbage} />
+        </Stack.Navigator>
+    );
+}
+
+function StackLayout4() {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Questions" component={Questions} />
+            <Stack.Screen name="MyQuestions" component={MyQuestions} />
+            <Stack.Screen name="Tips" component={Tips} />
         </Stack.Navigator>
     );
 }
