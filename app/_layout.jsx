@@ -45,14 +45,15 @@ function TabsLayout() {
         <Tab.Navigator screenOptions={{ headerShown: false }}>
 
             <Tab.Screen name="Home" component={Home} />
-         
+
 
             <Tab.Screen name="DailyTracking" component={StackLayout} />
             <Tab.Screen name="DriverPickupList" component={DriverStackLayout} />
             <Tab.Screen name="Q/A & Tips" component={StackLayout4} />
 
             <Tab.Screen name="Profile" component={StackLayout2} />
-            
+
+            <Tab.Screen name="GarbageBinList" component={GarbageBinList} />
         </Tab.Navigator>
     );
 }
@@ -63,7 +64,6 @@ function StackLayout() {
         <Stack.Navigator>
             <Stack.Screen name="DailyTracking" component={DailyTracking} options={{ headerShown: false }} />
             <Stack.Screen name="Schedule" component={Schedule} />
-
             <Stack.Screen name="GarbageBins" component={GarbageBinList} options={{ headerShown: false }} />
             <Stack.Screen name="GarbageSort" component={GarbageSortPage} />
             <Stack.Screen name="Step1" component={Step1} />
@@ -125,7 +125,7 @@ const _layout = () => {
     return (
         <UserProvider>
             <NavigationContainer independent={true}>
-                <StatusBar barStyle="dark-content" />
+                <StatusBar barStyle="dark-content" backgroundColor="#000000" />
                 <Stack.Navigator>
                     <Stack.Screen
                         name="Auth"
