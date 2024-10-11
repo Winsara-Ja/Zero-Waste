@@ -10,7 +10,7 @@ const SignUpScreen = ({ navigation }) => {
 
     const handleSignUp = async () => {
         try {
-            const user = await signUp(email, password, { name }); // Pass additional info
+            const user = await signUp(email, password, name); // Pass additional info
             Alert.alert('Sign Up Successful!', `Welcome ${user.email}`);
             navigation.navigate('Login'); // Navigate to Login after sign-up
         } catch (error) {

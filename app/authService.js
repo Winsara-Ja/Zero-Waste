@@ -1,21 +1,20 @@
 // authService.js
 import { collection, doc, addDoc, getDocs, setDoc, updateDoc, deleteDoc, query, where } from 'firebase/firestore';
-import { FIREBASE_AUTH } from '../firebaseConfig';
-import { FIREBASE_DB } from '../firebaseConfig';
+import { FIREBASE_AUTH, FIREBASE_DB } from '../firebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
-export const signUp = async (email, password, userInfo) => {
+export const signUp = async (email, password, name) => {
     try {
         const userCredential = await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
         const user = userCredential.user;
 
-        // Save additional user info to Firestore
+        // Store user info in Firestore
         await setDoc(doc(FIREBASE_DB, 'users', user.uid), {
+            name: name,
             email: user.email,
-            ...userInfo, // Spread additional user info here (e.g., name, phone, etc.)
         });
 
-        return user; // Return the user object
+        return user;
     } catch (error) {
         throw new Error(error.message);
     }

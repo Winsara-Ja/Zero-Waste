@@ -21,6 +21,10 @@ const DriverPickupList = () => {
         fetchPendingPickups();
     }, []);
 
+    const goToLocations = () => {
+        navigation.navigate('Locations');
+    };
+
     // Handle accept action
     const handleAccept = async (pickup) => {
         try {
@@ -46,7 +50,8 @@ const DriverPickupList = () => {
 
     const renderPickup = ({ item }) => (
         <View style={styles.pickupContainer}>
-            <Text style={styles.text}>Bin ID: {item.id}</Text>
+            <Text style={styles.text}>ID: {item.id}</Text>
+            <Text style={styles.text}>User Name: {item.user_name}</Text>
             <Text style={styles.text}>Bin Name: {item.name}</Text>
             <Text style={styles.text}>Waste Type: {item.wasteType}</Text>
             <Text style={styles.text}>Weight: {item.weight}</Text>
@@ -64,12 +69,19 @@ const DriverPickupList = () => {
     );
 
     return (
-        <FlatList
-            data={pendingPickups}
-            renderItem={renderPickup}
-            keyExtractor={item => item.id}
-            contentContainerStyle={styles.listContainer}
-        />
+        <>
+            <View>
+                <TouchableOpacity style={styles.navigateButton} onPress={goToLocations}>
+                    <Text style={styles.navigateButtonText}>Go to Garbage</Text>
+                </TouchableOpacity>
+            </View>
+            <FlatList
+                data={pendingPickups}
+                renderItem={renderPickup}
+                keyExtractor={item => item.id}
+                contentContainerStyle={styles.listContainer}
+            />
+        </>
     );
 };
 
@@ -101,6 +113,18 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: '#F44336',
         borderRadius: 5,
+    },
+    navigateButton: {
+        backgroundColor: '#56CCF2',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        margin: 20,
+    },
+    navigateButtonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
     buttonText: {
         color: 'white',

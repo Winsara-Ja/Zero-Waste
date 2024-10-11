@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
-import { collection, getDocs } from 'firebase/firestore';
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
+import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore'; // Import deleteDoc and doc
 import { FIREBASE_DB } from '../firebaseConfig';
+import { useUser } from './UserContext';
 
 const Garbage = () => {
     const [locations, setLocations] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const { user } = useUser();
 
     // Fetch locations from Firestore
     useEffect(() => {
@@ -27,11 +30,21 @@ const Garbage = () => {
         fetchLocations();
     }, []);
 
+    // Function to handle deleting a garbage item by its document ID
+    const handleDelete = async (id) => {
+        try {
+            await deleteDoc(doc(FIREBASE_DB, 'scheduledBins', id)); // Delete the document from Firestore
+            setLocations(locations.filter(item => item.id !== id)); // Update the UI after deletion
+            Alert.alert('Garbage item deleted successfully!');
+        } catch (error) {
+            Alert.alert('Error deleting garbage item:', error.message);
+        }
+    };
 
     const renderItem = ({ item }) => (
         <View style={styles.itemContainer}>
             <Text style={styles.itemText}>Bin ID: {item.bin_id}</Text>
-            <Text style={styles.itemText}>Name: {item.Name}</Text>
+            <Text style={styles.itemText}>Name: {user.name}</Text>
             <Text style={styles.itemText}>Type: {item.Type}</Text>
             <Text style={styles.itemText}>Weight: {item.weight}Kg</Text>
             <Text style={styles.itemText}>Date: {new Date(item.timestamp).toLocaleDateString()}</Text>
@@ -45,6 +58,10 @@ const Garbage = () => {
                 <Text style={styles.canceled}>{item.status}</Text>
             )}
 
+            {/* Delete Button */}
+            <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.id)}>
+                <Text style={styles.deleteButtonText}>Delete</Text>
+            </TouchableOpacity>
         </View>
     );
 
@@ -97,7 +114,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         textAlign: 'center',
     },
-
     canceled: {
         color: 'black',
         fontWeight: 'bold',
@@ -107,7 +123,18 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         textAlign: 'center',
     },
+    deleteButton: {
+        backgroundColor: '#ff5252',
+        padding: 10,
+        marginTop: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+    },
+    deleteButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
 });
 
 export default Garbage;
-

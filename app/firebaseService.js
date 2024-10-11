@@ -2,13 +2,14 @@
 import { collection, doc, addDoc, getDocs, setDoc, updateDoc, deleteDoc, query, where } from 'firebase/firestore';
 import { FIREBASE_DB } from '../firebaseConfig';
 
-export const storeUserLocation = async (latitude, longitude, bin_id, name, waste_type, waste_level, weight, status) => {
+export const storeUserLocation = async (latitude, longitude, bin_id, name, waste_type, waste_level, weight, status, user_name) => {
     try {
         await addDoc(collection(FIREBASE_DB, 'scheduledBins'), {
             latitude,
             longitude,
             bin_id,
             name,
+            user_name,
             waste_type,
             waste_level,
             status,
