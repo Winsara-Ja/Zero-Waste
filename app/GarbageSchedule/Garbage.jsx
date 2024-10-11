@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore'; // Import deleteDoc and doc
-import { FIREBASE_DB } from '../firebaseConfig';
-import { useUser } from './UserContext';
+import { FIREBASE_DB } from '../../firebaseConfig';
+import { useUser } from '../UserContext';
 
 const Garbage = () => {
     const [locations, setLocations] = useState([]);

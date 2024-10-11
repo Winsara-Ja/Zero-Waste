@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ActivityIndicator, Alert, Text } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { collection, getDocs } from 'firebase/firestore';
-import { FIREBASE_DB } from '../firebaseConfig';
+import { FIREBASE_DB } from '../../firebaseConfig';
 
 const Locations = () => {
     const [locations, setLocations] = useState([]);
@@ -71,7 +71,7 @@ const Locations = () => {
                                 <View style={styles.callout}>
                                     <Text style={{ fontWeight: 'bold' }}>ID: {location.id}</Text>
                                     <Text style={{ fontWeight: 'bold' }}>Name: {location.user_name}</Text>
-                                    <Text>Waste Type: {location.Type}</Text>
+                                    <Text>Waste Type: {location.waste_type}</Text>
                                     <Text>Weight: {location.weight}</Text>
                                     <Text>Date: {new Date(location.timestamp).toLocaleDateString()}</Text>
                                     <Text>Time: {new Date(location.timestamp).toLocaleTimeString()}</Text>

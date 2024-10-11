@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import { collection, getDocs } from 'firebase/firestore';
-import { FIREBASE_DB } from '../firebaseConfig';
+import { FIREBASE_DB } from '../../firebaseConfig';
 
 const CollectedGarbage = () => {
     const [collectedGarbage, setCollectedGarbage] = useState([]);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Alert, StyleSheet } from 'react-native';
-import { getPendingPickups, updatePickupStatus, saveAcceptedPickup } from './firebaseService'; // Functions for interacting with Firestore
+import { getPendingPickups, updatePickupStatus, saveAcceptedPickup } from '../firebaseService'; // Functions for interacting with Firestore
 import { useNavigation } from '@react-navigation/native';
 
 const DriverPickupList = () => {

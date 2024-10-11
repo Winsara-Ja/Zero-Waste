@@ -6,12 +6,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';  // Correct import for stack navigator
 import { UserProvider } from './UserContext';
 
-import GarbageBinList from './GarbageBinList';
-import CollectedGarbage from './CollectedGarbage';
-import Garbage from './Garbage';
-import Locations from './Locations';
-import Schedule from './Schedule';
-import DriverPickupList from './Accept';
+import GarbageBinList from './GarbageSchedule/GarbageBinList';
+import CollectedGarbage from './GrabageDriver/CollectedGarbage';
+import Garbage from './GarbageSchedule/Garbage';
+import Locations from './GrabageDriver/Locations';
+import Schedule from './GarbageSchedule/Schedule';
+import DriverPickupList from './GrabageDriver/Accept';
 import LoginScreen from './LogInScreen';
 import SignUpScreen from './SignUpScreen';
 import CurrentUserProfile from './ProfileScreen';

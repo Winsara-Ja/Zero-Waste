@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Button, Text, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { FIREBASE_AUTH } from '../firebaseConfig'; // Adjust import path based on your file structure
+import { FIREBASE_AUTH } from '../../firebaseConfig'; // Adjust import path based on your file structure
 import * as Location from 'expo-location';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import { storeUserLocation } from './firebaseService'; // Import the new location storing function
-import { useUser } from './UserContext';
+import { storeUserLocation } from '../firebaseService'; // Import the new location storing function
+import { useUser } from '../UserContext';
 
 const Schedule = () => {
 
