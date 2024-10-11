@@ -148,20 +148,26 @@ const DailyTracking = ({navigation}: any) => {
   };
 
   const renderItem = ({ item }: { item: DailyEntry }) => (
-    <TouchableOpacity onPress={() => toggleExpand(item.id)}>
-      <View style={styles.entryItem}>
+    <TouchableOpacity onPress={() => toggleExpand(item.id)} style={styles.entryCard}>
+      <View style={styles.entryHeader}>
         <Text style={styles.entryDate}>{item.date}</Text>
-        {expandedItem === item.id && (
-          <View>
-            <Text>Organic: {item.bins.Organic}%</Text>
-            <Text>Paper: {item.bins.Paper}%</Text>
-            <Text>Glass: {item.bins.Glass}%</Text>
-            <Text>Plastic: {item.bins.Plastic}%</Text>
-          </View>
-        )}
+        <Ionicons 
+          name={expandedItem === item.id ? 'chevron-up' : 'chevron-down'} 
+          size={24} 
+          color="#4caf50" 
+        />
       </View>
+      {expandedItem === item.id && (
+        <View style={styles.entryDetails}>
+          <Text style={styles.entryBin}>Organic: {item.bins.Organic}%</Text>
+          <Text style={styles.entryBin}>Paper: {item.bins.Paper}%</Text>
+          <Text style={styles.entryBin}>Glass: {item.bins.Glass}%</Text>
+          <Text style={styles.entryBin}>Plastic: {item.bins.Plastic}%</Text>
+        </View>
+      )}
     </TouchableOpacity>
   );
+  
 
   return (
     // Remove the ScrollView and change the FlatList to include the header
@@ -244,10 +250,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   header: {
-    backgroundColor: '#4caf50',
     padding: 15,
     borderRadius: 10,
-    marginBottom: 10,
     marginTop: 30, // Added margin at the top
   },
   bottomNav: {
@@ -270,9 +274,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   headerTitle: {
-    fontSize: 22,
-    color: '#fff',
+    fontSize: 30,
+    color: '#4caf50',
     textAlign: 'center',
+    fontWeight: 'bold',
   },
   title: {
     fontSize: 20,
@@ -281,6 +286,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 18,
     marginTop: 20,
+    fontWeight: 'bold',
   },
   datePicker: {
     marginBottom: 10,
@@ -337,6 +343,32 @@ const styles = StyleSheet.create({
   },
   flatList: {
     flex: 1,
+  },
+  entryCard: {
+    backgroundColor: '#f1f8e9',
+    padding: 15,
+    marginVertical: 8,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  entryHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  
+
+  entryDetails: {
+    marginTop: 10,
+  },
+  entryBin: {
+    fontSize: 16,
+    color: '#333',
+    marginVertical: 2,
   },
 });
 
