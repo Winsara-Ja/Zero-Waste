@@ -154,7 +154,7 @@ const DailyTracking = ({navigation}: any) => {
         <Ionicons 
           name={expandedItem === item.id ? 'chevron-up' : 'chevron-down'} 
           size={24} 
-          color="#4caf50" 
+          color="green" 
         />
       </View>
       {expandedItem === item.id && (
@@ -221,19 +221,19 @@ const DailyTracking = ({navigation}: any) => {
                 <View
                   style={[
                     styles.binInner,
-                    { height: `${bins[type]}%`, backgroundColor: bins[type] >= 80 ? 'red' : '#4caf50' },
+                    { height: `${bins[type]}%`, backgroundColor: bins[type] >= 80 ? 'red' : 'green' },
                   ]}
                 />
               </View>
               <View style={styles.binButtons}>
                 <Button title="-" onPress={() => updateBinLevel(type, -10)} color="#f44336" />
-                <Button title="+" onPress={() => updateBinLevel(type, 10)} color="#4caf50" />
+                <Button title="+" onPress={() => updateBinLevel(type, 10)} color="green" />
               </View>
             </View>
           ))}
         </View>
 
-        <Button title="Save" onPress={saveDailyEntry} color="#4caf50" />
+        <Button title="Save" onPress={saveDailyEntry} color="green" />
         <Text style={styles.subtitle}>Previous Entries:</Text>
       </>
     }
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   navButton: {
-    backgroundColor: '#4caf50', // Green background for buttons
+    backgroundColor: 'green', // Green background for buttons
     paddingHorizontal: 30,
     paddingVertical: 10,
     marginHorizontal: 5,
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 30,
-    color: '#4caf50',
+    color: 'green',
     textAlign: 'center',
     fontWeight: 'bold',
   },

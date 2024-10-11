@@ -65,7 +65,6 @@ function StackLayout() {
             <Stack.Screen name="Schedule" component={Schedule} />
 
             <Stack.Screen name="GarbageBins" component={GarbageBinList} options={{ headerShown: false }} />
-            <Stack.Screen name="Schedule" component={Schedule} />
             <Stack.Screen name="GarbageSort" component={GarbageSortPage} />
             <Stack.Screen name="Step1" component={Step1} />
             <Stack.Screen name="Step2" component={Step2} />
