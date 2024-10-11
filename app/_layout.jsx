@@ -1,4 +1,7 @@
+
 import React from 'react';
+import { Image } from 'react-native';
+
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -26,6 +29,10 @@ import MonthlyReport from './wasteTracking/MonthlyReport';
 import MyQuestions from './wasteTracking/MyQuestions';
 import Questions from './wasteTracking/Questions';
 import Tips from './wasteTracking/Tips';
+
+import Shop from './shop';
+import addpost from './addpost'
+// Correct usage of createBottomTabNavigator and createStackNavigator from @react-navigation/stack
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -127,30 +134,32 @@ function ScheduleStack() {
         <Stack.Navigator>
             <Stack.Screen name="GarbageBinList" component={GarbageBinList} options={{ headerShown: false }} />
             <Stack.Screen name="Schedule" component={Schedule} />
+            <Stack.Screen name="addpost" component={AddProduct} />
         </Stack.Navigator>
     );
 }
 
+
+// Main Layout
 const _layout = () => {
     return (
-        <UserProvider>
-            <NavigationContainer independent={true}>
-                <StatusBar barStyle="dark-content" backgroundColor="#000000" />
-                <Stack.Navigator>
-                    <Stack.Screen
-                        name="Auth"
-                        component={AuthStack}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                        name="Main"
-                        component={TabsLayout}
-                        options={{ headerShown: false }}
-                    />
-                </Stack.Navigator>
-            </NavigationContainer>
-        </UserProvider>
-    );
+        <NavigationContainer independent={true}>
+            <StatusBar barStyle="dark-content" />
+            <Stack.Navigator>
+                <Stack.Screen
+                    name="Auth"
+                    component={AuthStack}
+                    options={{ headerShown: false }} // Hide header for auth screens
+                />
+                <Stack.Screen
+                    name="Main"
+                    component={TabsLayout}
+                    options={{ headerShown: false }} // Hide header for main app screens
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
+    )
 }
 
 export default _layout;
+
