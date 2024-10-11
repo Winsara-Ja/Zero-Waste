@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';  // Correct impo
 import { UserProvider } from './UserContext';
 
 import GarbageBinList from './GarbageBinList';
+import CollectedGarbage from './CollectedGarbage';
 import Garbage from './Garbage';
 import Locations from './Locations';
 import Schedule from './Schedule';
@@ -58,11 +59,12 @@ function StackLayout2() {
     );
 }
 
-function StackLayout3() {
+function DriverStackLayout() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="PickupList" component={DriverPickupList} options={{ headerShown: false }} />
             <Stack.Screen name="Locations" component={Locations} />
+            <Stack.Screen name="CollectedGarbage" component={CollectedGarbage} />
         </Stack.Navigator>
     );
 }
