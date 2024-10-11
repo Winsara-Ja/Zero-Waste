@@ -4,6 +4,8 @@ import { FIREBASE_DB } from '../firebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
 import { useUser } from './UserContext'; // Import your UserContext
 import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const CurrentUserProfile = () => {
     const [userData, setUserData] = useState(null);
@@ -43,6 +45,11 @@ const CurrentUserProfile = () => {
         try {
             // Assuming your signOut function is available in UserContext or similar
             await signOut(); // Call your sign-out function from context if necessary
+            Toast.show({
+                text1: 'Sign Out Successful',
+                text2: 'You have signed out successfully!',
+                type: 'success', // or 'error' for an error message
+            });
             console.log("User signed out successfully.");
             navigation.navigate('Auth', { screen: 'LogInScreen' }); // Redirect to the Login screen
         } catch (error) {
@@ -59,22 +66,24 @@ const CurrentUserProfile = () => {
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>User Profile</Text>
-            {userData.profilePicture && (
-                <Image
-                    source={{ uri: userData.profilePicture }} // Assuming profilePicture is stored in Firestore
-                    style={styles.profileImage}
-                />
-            )}
-            <Text style={styles.itemText}>Name: {userData.name}</Text>
-            <Text style={styles.itemText}>Email: {userData.email}</Text>
-            <Button title="Sign Out" onPress={handleSignOut} color="#FF5733" />
-            {/* Button to navigate to the Garbage screen */}
-            <TouchableOpacity style={styles.navigateButton} onPress={() => navigation.navigate('Garbage')}>
-                <Text style={styles.navigateButtonText}>Go to Garbage</Text>
-            </TouchableOpacity>
-        </View>
+        <SafeAreaView style={styles.container}>
+            <View style={styles.container}>
+                <Text style={styles.title}>User Profile</Text>
+                {userData.profilePicture && (
+                    <Image
+                        source={{ uri: userData.profilePicture }} // Assuming profilePicture is stored in Firestore
+                        style={styles.profileImage}
+                    />
+                )}
+                <Text style={styles.itemText}>Name: {userData.name}</Text>
+                <Text style={styles.itemText}>Email: {userData.email}</Text>
+                <Button title="Sign Out" onPress={handleSignOut} color="#FF5733" />
+                {/* Button to navigate to the Garbage screen */}
+                <TouchableOpacity style={styles.navigateButton} onPress={() => navigation.navigate('Garbage')}>
+                    <Text style={styles.navigateButtonText}>Go to Garbage</Text>
+                </TouchableOpacity>
+            </View>
+        </SafeAreaView>
     );
 };
 
