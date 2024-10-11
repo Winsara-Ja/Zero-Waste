@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React from 'react';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'react-native'; // Change from 'react-native-web' to 'react-native'
@@ -71,3 +72,158 @@ const _layout = () => {
 }
 
 export default _layout;
+=======
+import React, { useState } from 'react';
+import { View, Text, TextInput, Alert, StyleSheet, Pressable, ScrollView } from 'react-native';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../firebase/index'; // Adjust the import path
+import { useNavigation } from '@react-navigation/native'; // Import navigation hook
+
+const AddProduct = () => {
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [category, setCategory] = useState('');
+  const [sellerName, setSellerName] = useState('');
+  const [address, setAddress] = useState('');
+  const [price, setPrice] = useState('');
+  
+  const navigation = useNavigation(); // Initialize navigation
+
+  const handleUpload = async () => {
+    if (!name || !description || !category || !sellerName || !address || !price) {
+      Alert.alert('Error', 'Please fill in all fields.');
+      return;
+    }
+
+    try {
+      // Save the data in Firestore
+      await addDoc(collection(db, 'Products'), {
+        name,
+        description,
+        category,
+        sellerName,
+        address,
+        price: parseFloat(price), // Ensure price is stored as a number
+      });
+
+      Alert.alert('Success', 'Product uploaded successfully!');
+      
+      // Clear input fields
+      setName('');
+      setDescription('');
+      setCategory('');
+      setSellerName('');
+      setAddress('');
+      setPrice('');
+
+      // Navigate to shop screen
+      navigation.navigate('shop'); // Ensure the screen name matches the one in your navigator
+
+    } catch (error) {
+      console.error('Upload Error: ', error);
+      Alert.alert('Error', 'Something went wrong during upload.');
+    }
+  };
+
+  return (
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Add Product</Text>
+
+        <Text style={styles.label}>Product Name</Text>
+        <TextInput
+          placeholder="Enter Product Name"
+          value={name}
+          onChangeText={setName}
+          style={styles.input}
+        />
+
+        <Text style={styles.label}>Description</Text>
+        <TextInput
+          placeholder="Enter Description"
+          value={description}
+          onChangeText={setDescription}
+          style={styles.input}
+          multiline
+        />
+
+        <Text style={styles.label}>Category</Text>
+        <TextInput
+          placeholder="Enter Category"
+          value={category}
+          onChangeText={setCategory}
+          style={styles.input}
+        />
+
+        <Text style={styles.label}>Seller Name</Text>
+        <TextInput
+          placeholder="Enter Seller Name"
+          value={sellerName}
+          onChangeText={setSellerName}
+          style={styles.input}
+        />
+
+        <Text style={styles.label}>Address</Text>
+        <TextInput
+          placeholder="Enter Address"
+          value={address}
+          onChangeText={setAddress}
+          style={styles.input}
+        />
+
+        <Text style={styles.label}>Price</Text>
+        <TextInput
+          placeholder="Enter Price"
+          value={price}
+          onChangeText={setPrice}
+          keyboardType="numeric"
+          style={styles.input}
+        />
+
+        <Pressable onPress={handleUpload} style={styles.button}>
+          <Text style={styles.buttonText}>Upload</Text>
+        </Pressable>
+      </View>
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
+  container: {
+    padding: 15,
+    marginTop: 30, // Increased upper margin
+  },
+  title: {
+    fontSize: 22,
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+    color: '#333',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 8,
+    marginBottom: 15,
+    borderRadius: 4,
+  },
+  button: {
+    backgroundColor: '#007bff',
+    padding: 12,
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+});
+
+export default AddProduct;
+>>>>>>> Stashed changes
