@@ -69,7 +69,7 @@ const Questions = ({ navigation }: any) => {
         style={styles.floatingButton}
         onPress={() => navigation.navigate('MyQuestions')} // Replace 'MyQuestions' with the actual route name
       >
-        <MaterialIcons name="edit" size={30} color="#fff" />
+        <MaterialIcons name="edit" size={30} color="#008080" />
       </TouchableOpacity>
     </View>
   );
