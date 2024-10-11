@@ -16,6 +16,16 @@ import LoginScreen from './LogInScreen';
 import SignUpScreen from './SignUpScreen';
 import CurrentUserProfile from './ProfileScreen';
 
+
+import Home from './home'
+import GarbageSortPage from './GarbageSort/GarbageSortPage'
+import Step1 from './GarbageSort/Step1'
+import Step2 from './GarbageSort/Step2'
+import Step3 from './GarbageSort/Step3'
+import Step4 from './GarbageSort/Step4'
+import Step5 from './GarbageSort/Step5'
+import Add from './GarbageSort/addStep'
+
 import DailyTracking from './wasteTracking/DailyTracking';
 import WeeklyTracking from './wasteTracking/WeeklyTracking';
 import MonthlyTracking from './wasteTracking/MonthlyTracking';
@@ -23,6 +33,7 @@ import MonthlyReport from './wasteTracking/MonthlyReport';
 import MyQuestions from './wasteTracking/MyQuestions';
 import Questions from './wasteTracking/Questions';
 import Tips from './wasteTracking/Tips';
+
 
 // Correct usage of createBottomTabNavigator and createStackNavigator from @react-navigation/stack
 const Tab = createBottomTabNavigator();
@@ -32,9 +43,14 @@ const Stack = createStackNavigator();
 function TabsLayout() {
     return (
         <Tab.Navigator screenOptions={{ headerShown: false }}>
+
+            <Tab.Screen name="Home" component={Home} />
+         
+
             <Tab.Screen name="DailyTracking" component={StackLayout} />
             <Tab.Screen name="DriverPickupList" component={DriverStackLayout} />
             <Tab.Screen name="Q/A & Tips" component={StackLayout4} />
+
             <Tab.Screen name="Profile" component={StackLayout2} />
             
         </Tab.Navigator>
@@ -47,9 +63,21 @@ function StackLayout() {
         <Stack.Navigator>
             <Stack.Screen name="DailyTracking" component={DailyTracking} options={{ headerShown: false }} />
             <Stack.Screen name="Schedule" component={Schedule} />
+
+            <Stack.Screen name="GarbageBins" component={GarbageBinList} options={{ headerShown: false }} />
+            <Stack.Screen name="Schedule" component={Schedule} />
+            <Stack.Screen name="GarbageSort" component={GarbageSortPage} />
+            <Stack.Screen name="Step1" component={Step1} />
+            <Stack.Screen name="Step2" component={Step2} />
+            <Stack.Screen name="Step3" component={Step3} />
+            <Stack.Screen name="Step4" component={Step4} />
+            <Stack.Screen name="Step5" component={Step5} />
+            <Stack.Screen name="AddStep" component={Add} />
+
             <Stack.Screen name="WeeklyTracking" component={WeeklyTracking} />
             <Stack.Screen name="MonthlyTracking" component={MonthlyTracking} />
             <Stack.Screen name="MonthlyReport" component={MonthlyReport} />
+
         </Stack.Navigator>
     );
 }
