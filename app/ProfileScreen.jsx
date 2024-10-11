@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 const CurrentUserProfile = () => {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const { userId } = useUser(); // Get userId from UserContext
+    const { userId, signOut } = useUser(); // Get userId from UserContext
     const navigation = useNavigation();
 
     useEffect(() => {

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut as firebaseSignOut } from 'firebase/auth'; // Import signOut from Firebase Auth
 import { doc, getDoc } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../firebaseConfig';
 
@@ -31,8 +31,21 @@ export const UserProvider = ({ children }) => {
         return () => unsubscribe();
     }, []);
 
+    const signOut = async () => {
+        try {
+            await firebaseSignOut(FIREBASE_AUTH); // Call Firebase's signOut function
+            console.log("User signed out successfully.");
+            // Reset state here if needed
+            setUser(null);
+            setUserId(null);
+        } catch (error) {
+            console.error("Error signing out: ", error);
+            throw error; // You may want to handle this in the calling component
+        }
+    };
+
     return (
-        <UserContext.Provider value={{ user, userId, loading }}>
+        <UserContext.Provider value={{ user, userId, loading, signOut }}>
             {children}
         </UserContext.Provider>
     );

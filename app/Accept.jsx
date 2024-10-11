@@ -57,7 +57,7 @@ const DriverPickupList = () => {
             <Text style={styles.text}>ID: {item.id}</Text>
             <Text style={styles.text}>User Name: {item.user_name}</Text>
             <Text style={styles.text}>Bin Name: {item.name}</Text>
-            <Text style={styles.text}>Waste Type: {item.wasteType}</Text>
+            <Text style={styles.text}>Waste Type: {item.waste_type}</Text>
             <Text style={styles.text}>Weight: {item.weight}</Text>
             <Text style={styles.text}>Waste Level: {item.wasteLevel}</Text>
 

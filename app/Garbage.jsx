@@ -52,7 +52,7 @@ const Garbage = () => {
         <View style={styles.itemContainer}>
             <Text style={styles.itemText}>Bin ID: {item.bin_id}</Text>
             <Text style={styles.itemText}>Name: {user.name}</Text>
-            <Text style={styles.itemText}>Type: {item.Type}</Text>
+            <Text style={styles.itemText}>Type: {item.waste_type}</Text>
             <Text style={styles.itemText}>Weight: {item.weight}</Text>
             <Text style={styles.itemText}>Date: {new Date(item.timestamp).toLocaleDateString()}</Text>
             <Text style={styles.itemText}>Time: {new Date(item.timestamp).toLocaleTimeString()}</Text>
