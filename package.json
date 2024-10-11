@@ -27,6 +27,7 @@
     "@react-navigation/stack": "^6.4.1",
     "expo": "~51.0.24",
     "expo-constants": "~16.0.2",
+    "expo-linear-gradient": "^13.0.2",
     "expo-linking": "~6.3.1",
     "expo-location": "~17.0.1",
     "expo-notifications": "~0.28.16",

@@ -1,35 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { View, Button, Text, Alert, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { FIREBASE_AUTH } from '../../firebaseConfig'; // Adjust import path based on your file structure
 import * as Location from 'expo-location';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import { storeUserLocation } from '../firebaseService'; // Import the new location storing function
+import { storeUserLocation } from '../firebaseService'; // Adjust path as needed
 import { useUser } from '../UserContext';
 
 const Schedule = () => {
-
-    const { user, loading, userId } = useUser();
-
+    const { user, userId } = useUser();
     const route = useRoute();
-    // const { bin } = route.params;
     const navigation = useNavigation();
     const [location, setLocation] = useState(null);
     const [mapRegion, setMapRegion] = useState({
-        latitude: 37.78825, // Default latitude
-        longitude: -122.4324, // Default longitude
+        latitude: 37.78825,
+        longitude: -122.4324,
         latitudeDelta: 0.001,
         longitudeDelta: 0.01,
     });
+    const [modalVisible, setModalVisible] = useState(false); // For showing the custom modal
 
     const status = 'pending';
     const bin = route?.params?.bin || { name: 'Unknown', wasteType: 'Unknown', weight: 'Unknown', wasteLevel: 'Unknown' };
-    // Request location permission and get current location
+
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
-                Alert.alert('Permission to access location was denied');
+                showAlert('Permission Denied', 'Permission to access location was denied');
                 return;
             }
 
@@ -38,8 +35,6 @@ const Schedule = () => {
 
             if (currentLocation) {
                 const { latitude, longitude } = currentLocation.coords;
-
-                // Set the map region to the current location
                 setMapRegion({
                     ...mapRegion,
                     latitude,
@@ -57,20 +52,22 @@ const Schedule = () => {
             if (currentLocation) {
                 const { latitude, longitude } = currentLocation.coords;
 
-                // Update map region to current location
                 setMapRegion({
                     ...mapRegion,
                     latitude,
                     longitude,
                 });
 
-                // Store location in Firestore
                 await storeUserLocation(latitude, longitude, bin.id, bin.name, bin.wasteType, bin.weight, bin.wasteLevel, status, user.name, userId);
-                Alert.alert('Your Garbage has been scheduled for Pickup');
+                setModalVisible(true); // Show custom modal instead of alert
             }
         } catch (error) {
-            Alert.alert('Error fetching location:', error.message);
+            showAlert('Error', error.message);
         }
+    };
+
+    const showAlert = (title, message) => {
+        setModalVisible(true); // Show custom modal for both success and error alerts
     };
 
     return (
@@ -94,65 +91,134 @@ const Schedule = () => {
                     )}
                 </MapView>
             </View>
-            {/* Top 50% for information */}
+
             <View style={styles.infoContainer}>
                 <Text style={styles.title}>Garbage Pickup Scheduler</Text>
-                <View className="p-4">
-                    <Text className="text-xl font-bold mb-4">{bin.name}</Text>
-                    <Text className="text-md">Waste Type: {bin.wasteType}</Text>
-                    <Text className="text-md">Weight: {bin.weight}</Text>
-                    <Text className="text-md">Waste Level: {bin.wasteLevel}</Text>
+                <View style={styles.binDetails}>
+                    <Text style={styles.binName}>{bin.name}</Text>
+                    <Text style={styles.binInfo}>Waste Type: {bin.wasteType}</Text>
+                    <Text style={styles.binInfo}>Weight: {bin.weight}</Text>
+                    <Text style={styles.binInfo}>Waste Level: {bin.wasteLevel}</Text>
                 </View>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.pickupButton} onPress={getCurrentLocation}>
-                        <Text style={styles.buttonText}>Schedule for Pickup</Text>
+                        <Text style={styles.buttonText}>Schedule Pickup</Text>
                     </TouchableOpacity>
                 </View>
             </View>
+
+            {/* Custom Modal */}
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalTitle}>Success!</Text>
+                        <Text style={styles.modalMessage}>Your garbage has been scheduled for pickup.</Text>
+                        <TouchableOpacity
+                            style={styles.closeButton}
+                            onPress={() => setModalVisible(false)}
+                        >
+                            <Text style={styles.closeButtonText}>OK</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    infoContainer: {
-        flex: 2, // Take up 50% of the screen
-        padding: 20,
-        backgroundColor: '#ECDFCC',
-        justifyContent: 'center',
-        borderTopRightRadius: 20,
-        borderTopLeftRadius: 20,
-        zIndex: 3,
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 10,
-        textAlign: 'center',
-    },
-    description: {
-        fontSize: 16,
-        marginBottom: 20,
-        textAlign: 'center',
-    },
-    buttonContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     mapContainer: {
-        flex: 3, // Take up the remaining 50% of the screen
+        flex: 3,
     },
     map: {
         flex: 1,
     },
+    infoContainer: {
+        flex: 2,
+        padding: 20,
+        backgroundColor: '#f0f0f0',
+        borderTopRightRadius: 10,
+        borderTopLeftRadius: 10,
+        justifyContent: 'center',
+        elevation: 4,
+    },
+    title: {
+        fontSize: 22,
+        fontWeight: '600',
+        textAlign: 'center',
+        color: '#008080',
+        marginBottom: 10,
+    },
+    binDetails: {
+        marginVertical: 15,
+    },
+    binName: {
+        fontSize: 20,
+        fontWeight: '600',
+        marginBottom: 5,
+        textAlign: 'center',
+        color: '#333',
+    },
+    binInfo: {
+        fontSize: 16,
+        color: '#555',
+        textAlign: 'center',
+    },
+    buttonContainer: {
+        alignItems: 'center',
+        marginTop: 20,
+    },
     pickupButton: {
-        padding: 10,
-        backgroundColor: '#697565', // Set your desired button color here
-        borderRadius: 5, // Optional: add border radius for rounded corners
+        paddingVertical: 12,
+        paddingHorizontal: 30,
+        backgroundColor: '#008080',
+        borderRadius: 6,
     },
     buttonText: {
-        color: 'white', // Set the text color
+        color: '#fff',
         fontSize: 16,
+        fontWeight: '600',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Dim background
+    },
+    modalContent: {
+        width: 300,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        padding: 20,
+        alignItems: 'center',
+    },
+    modalTitle: {
+        fontSize: 22,
         fontWeight: 'bold',
+        marginBottom: 15,
+        color: '#008080',
+    },
+    modalMessage: {
+        fontSize: 16,
+        textAlign: 'center',
+        marginBottom: 20,
+        color: '#555',
+    },
+    closeButton: {
+        backgroundColor: '#008080',
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        borderRadius: 5,
+    },
+    closeButtonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '600',
     },
 });
 
