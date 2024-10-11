@@ -8,6 +8,7 @@ const index = () => {
         <View style={styles.container}>
             <Text className="text-3xl font-SpaceMono mb-20">Zero Waste</Text>
             <Link href="/home" className='mb-10 text-2xl'>Go to Home</Link>
+            <Link href="/chatApp" className='mb-10 text-2xl'>Go to Chat</Link>
         </View>
     )
 }

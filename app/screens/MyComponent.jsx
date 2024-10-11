@@ -11,7 +11,7 @@ import Step2 from './Step2';
 import Step3 from './Step3';
 import Step4 from './Step4';
 import Step5 from './Step5';
-import ChatApp from './chatApp'; // Import your new page component (ensure correct path)
+import ChatApp from '../chatApp'; // Import your new page component (ensure correct path)
 
 const Stack = createStackNavigator();
 
@@ -51,12 +51,13 @@ const MyComponent = ({ navigation }) => {
             source={require('../../assets/images/chat-bot.gif')} // Adjust path to your GIF
             style={styles.gifImage}
           />
+          <Text style={styles.gifText}>
+            Need help?
+          </Text>
         </TouchableOpacity>
 
-        {/* Add text under the GIF */}
-        <Text style={styles.gifText}>
-          Need help?
-        </Text>
+        {/* Add text in the top-left corner */}
+        <Text style={styles.disposeText}>How To Dispose?</Text>
 
         {/* Garbage Picker */}
         <GarbageNamePicker
@@ -114,23 +115,35 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   gifImage: {
-    width: 150,
-    height: 150,
+    width: 130,
+    height: 130,
     position: 'absolute',
     top: 0,
     right: -50,
+  },
+  disposeText: {
+    position: 'absolute',
+    top: 120, // Position it at the top
+    left: 10, // Position it at the left
+    fontSize: 30,
+    color: 'black',
+    fontWeight: 'bold',
+    fontFamily: 'Poppins', // Add custom font
+    letterSpacing: 1.2, // Add letter spacing
+    textTransform: 'uppercase', // Transform text to uppercase
   },
   gifText: {
     fontSize: 20,
     color: 'black',
     position: 'absolute',
-    top: 190, // Position it below the GIF image
-    right: 20,
+    top: 120, // Position it below the GIF image
+    right: -30,
     textAlign: 'center',
   },
   selectedText: {
     marginTop: 20,
     fontSize: 16,
+    
   },
   selectBox: {
     width: '100%',
