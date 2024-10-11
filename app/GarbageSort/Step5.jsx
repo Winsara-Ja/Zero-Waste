@@ -79,7 +79,7 @@ const Step5 = ({ route, navigation }) => {
         {/* Go to Home Button with Home Icon */}
         <TouchableOpacity 
           style={styles.homeButton}
-          onPress={() => navigation.navigate('Home')} // Navigate back to home or any screen after the last step
+          onPress={() => navigation.navigate('HomePage')} // Navigate back to home or any screen after the last step
         >
           <HomeIcon name="home" size={24} color="white" />
           <Text style={styles.homeButtonText}>Home</Text>

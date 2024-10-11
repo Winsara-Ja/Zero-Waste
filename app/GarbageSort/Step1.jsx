@@ -64,12 +64,7 @@ const Step1 = ({ route, navigation }) => {
       {/* Button container to hold both buttons in a row */}
       <View style={styles.buttonContainer}>
         {/* Previous Step Button */}
-        <TouchableOpacity 
-          style={styles.prevButton}
-          onPress={() => navigation.navigate('GarbageBinList', { screen: 'GarbageSort' })} // Navigate to SelectPage
-        >
-          <Icon name="arrow-back" size={24} color="white" />
-        </TouchableOpacity>
+       
 
         {/* Next Step Button with Right Arrow */}
         <TouchableOpacity 
@@ -147,6 +142,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Center the icon horizontally
     backgroundColor: 'green', // Button background color for next
     borderRadius: 30, // Half of width/height for a circular shape
+    marginLeft:300
   },
 });
 

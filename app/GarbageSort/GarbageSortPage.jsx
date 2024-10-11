@@ -100,7 +100,7 @@ const MyComponent = () => {
   }
 
   return (
-    <Stack.Navigator initialRouteName="Step1">
+    <Stack.Navigator >
       <Stack.Screen
         name="Step1"
         component={Step1}

@@ -27,6 +27,14 @@ import MyQuestions from './wasteTracking/MyQuestions';
 import Questions from './wasteTracking/Questions';
 import Tips from './wasteTracking/Tips';
 
+import GarbageSortPage from './GarbageSort/GarbageSortPage'
+import Step1 from './GarbageSort/Step1'
+import Step2 from './GarbageSort/Step2'
+import Step3 from './GarbageSort/Step3'
+import Step4 from './GarbageSort/Step4'
+import Step5 from './GarbageSort/Step5'
+import Add from './GarbageSort/addStep'
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -77,9 +85,14 @@ function StackLayout() {
             <Stack.Screen name="DailyTracking" component={DailyTracking} options={{ headerShown: false }} />
             <Stack.Screen name="WeeklyTracking" component={WeeklyTracking} />
             <Stack.Screen name="MonthlyTracking" component={MonthlyTracking} />
+            
         </Stack.Navigator>
     );
 }
+
+
+
+
 
 function StackLayout2() {
     return (
@@ -109,6 +122,13 @@ function StackLayout4() {
             <Stack.Screen name="Questions" component={Questions} />
             <Stack.Screen name="MyQuestions" component={MyQuestions} />
             <Stack.Screen name="Tips" component={Tips} />
+            <Stack.Screen name="GarbageSort" component={GarbageSortPage} options={{ headerShown: false }} />
+            <Stack.Screen name="Step1" component={Step1} />
+            <Stack.Screen name="Step2" component={Step2} />
+            <Stack.Screen name="Step3" component={Step3} />
+            <Stack.Screen name="Step4" component={Step4} />
+            <Stack.Screen name="Step5" component={Step5} />
+            <Stack.Screen name="AddStep" component={Add} />
         </Stack.Navigator>
     );
 }
