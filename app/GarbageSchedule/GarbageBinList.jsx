@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: '#f5f5f5', // Light background for the card
         padding: 16,
-        marginVertical: 10,
+        marginVertical: 2,
         borderRadius: 12, // Rounded corners
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },

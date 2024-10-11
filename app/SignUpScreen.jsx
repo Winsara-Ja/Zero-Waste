@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Alert, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
+import { View, TextInput, Button, Alert, StyleSheet, Text, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import { signUp } from './authService'; // Adjust path as needed
 
 const SignUpScreen = ({ navigation }) => {
@@ -18,45 +18,50 @@ const SignUpScreen = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            {/* Placeholder for the logo */}
-            <Image source={require('../assets/images/logo.png')} style={styles.logo} />
+        <ImageBackground
+            source={require('../assets/images/bg1.png')} // Replace with the correct path
+            style={styles.background}
+        >
+            <View style={styles.container}>
+                {/* Placeholder for the logo */}
+                <Image source={require('../assets/images/logo1.png')} style={styles.logo} />
 
-            <Text style={styles.title}>Create an Account</Text>
+                <Text style={styles.title}>Create an Account</Text>
 
-            <TextInput
-                style={styles.input}
-                placeholder="Name"
-                value={name}
-                onChangeText={setName}
-                placeholderTextColor="#555"
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                placeholderTextColor="#555"
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-                placeholderTextColor="#555"
-            />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Name"
+                    value={name}
+                    onChangeText={setName}
+                    placeholderTextColor="#555"
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    placeholderTextColor="#555"
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry
+                    placeholderTextColor="#555"
+                />
 
-            <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
-                <Text style={styles.signUpButtonText}>Sign Up</Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
+                    <Text style={styles.signUpButtonText}>Sign Up</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.loginText}>Already have an account? Login</Text>
-            </TouchableOpacity>
-        </View>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                    <Text style={styles.loginText}>Already have an account? Login</Text>
+                </TouchableOpacity>
+            </View>
+        </ImageBackground>
     );
 };
 
@@ -67,9 +72,14 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: '#fff',
     },
+    background: {
+        flex: 1,
+        justifyContent: 'center',
+    },
     logo: {
         width: 120,
         height: 120,
+        borderRadius: 60, // Make the logo round
         marginBottom: 30,
         alignSelf: 'center',
     },

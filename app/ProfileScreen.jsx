@@ -97,6 +97,11 @@ const CurrentUserProfile = () => {
                 <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Garbage')}>
                     <Text style={styles.buttonText}>Go to Garbage</Text>
                 </TouchableOpacity>
+                <View style={styles.line} />
+                {/* Navigate to Garbage Screen Button */}
+                <TouchableOpacity style={styles.button2} onPress={() => navigation.navigate('PickupList')}>
+                    <Text style={styles.buttonText}>Garbage Driver</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );
@@ -116,6 +121,11 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         padding: 20,
+    },
+    line: {
+        borderBottomColor: '#000000', // Line color
+        borderBottomWidth: 2, // Line thickness
+        marginVertical: 20, // Space around the line
     },
     profileImage: {
         width: 120,
@@ -137,6 +147,14 @@ const styles = StyleSheet.create({
     },
     button1: {
         backgroundColor: '#dc3545',
+        padding: 15,
+        borderRadius: 10,
+        width: '90%',
+        alignItems: 'center',
+        marginVertical: 10,
+    },
+    button2: {
+        backgroundColor: 'gray',
         padding: 15,
         borderRadius: 10,
         width: '90%',

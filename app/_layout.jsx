@@ -43,8 +43,6 @@ function TabsLayout() {
                         iconName = focused ? 'calendar' : 'calendar-outline';
                     } else if (route.name === 'GarbageBins') {
                         iconName = focused ? 'trash' : 'trash-outline';
-                    } else if (route.name === 'Q/A & Tips') {
-                        iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
                     } else if (route.name === 'Profile') {
                         iconName = focused ? 'person' : 'person-outline';
                     }
@@ -65,10 +63,9 @@ function TabsLayout() {
                 },
             })}
         >
-            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="Home" component={StackLayout4} />
             <Tab.Screen name="DailyTracking" component={StackLayout} />
             <Tab.Screen name="GarbageBins" component={ScheduleStack} />
-            <Tab.Screen name="Q/A & Tips" component={StackLayout4} />
             <Tab.Screen name="Profile" component={StackLayout2} />
         </Tab.Navigator>
     );
@@ -89,13 +86,7 @@ function StackLayout2() {
         <Stack.Navigator>
             <Stack.Screen name="ProfilePage" component={CurrentUserProfile} options={{ headerShown: false }} />
             <Stack.Screen name="Garbage" component={Garbage} />
-        </Stack.Navigator>
-    );
-}
-
-function DriverStackLayout() {
-    return (
-        <Stack.Navigator>
+            {/* Driver Screens */}
             <Stack.Screen name="PickupList" component={DriverPickupList} options={{ headerShown: false }} />
             <Stack.Screen name="Locations" component={Locations} />
             <Stack.Screen name="CollectedGarbage" component={CollectedGarbage} />
@@ -103,9 +94,18 @@ function DriverStackLayout() {
     );
 }
 
+// function DriverStackLayout() {
+//     return (
+//         <Stack.Navigator>
+
+//         </Stack.Navigator>
+//     );
+// }
+
 function StackLayout4() {
     return (
         <Stack.Navigator>
+            <Stack.Screen name="HomePage" component={Home} options={{ headerShown: false }} />
             <Stack.Screen name="Questions" component={Questions} />
             <Stack.Screen name="MyQuestions" component={MyQuestions} />
             <Stack.Screen name="Tips" component={Tips} />
