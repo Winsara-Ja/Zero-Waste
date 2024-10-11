@@ -68,6 +68,7 @@ const Home = () => {
           <Text style={styles.buttonText}>Recycling Information</Text>
         </TouchableOpacity>
 
+
         <TouchableOpacity
           style={styles.button}
           onPress={() => { /* Navigate to report an issue */ }}

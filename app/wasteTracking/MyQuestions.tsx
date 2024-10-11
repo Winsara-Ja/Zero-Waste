@@ -15,7 +15,7 @@ interface Question {
   answer: string; // Placeholder for the answer
 }
 
-const MyQuestions = () => {
+const MyQuestions = ({ navigation }: any) => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [name, setName] = useState(''); // Placeholder for user's name
   const [category, setCategory] = useState('General');
@@ -97,7 +97,18 @@ const MyQuestions = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Submit Your Question</Text>
+
+      {/* Navigation bar */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity onPress={() => navigation.navigate('Questions')} style={styles.navButton}>
+          <Text style={styles.navButtonText}>Questions</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Tips')} style={styles.navButton}>
+          <Text style={styles.navButtonText}>Tips</Text>
+        </TouchableOpacity>
+      </View>
+
+      <Text style={styles.header}>Submit Your Questions</Text>
       <TextInput
         value={name}
         onChangeText={setName}
@@ -118,7 +129,7 @@ const MyQuestions = () => {
         multiline
         style={styles.textArea}
       />
-      <Button title="Submit" onPress={addQuestion} color="#4CAF50" />
+      <Button title="Submit" onPress={addQuestion} color="#008080" />
 
       <FlatList
         data={questions.filter(q => q.name === name)}
@@ -128,9 +139,12 @@ const MyQuestions = () => {
             <Text style={styles.category}>{item.category}</Text>
             <Text style={styles.questionText}>{item.question}</Text>
             <Text style={styles.answerText}>Answer: {item.answer}</Text>
-            <TouchableOpacity onPress={() => deleteQuestion(item.id)} style={styles.iconContainer}>
-              <Icon name="delete" size={24} color="#FF6347" />
-            </TouchableOpacity>
+            <View style={styles.actionContainer}>
+              <TouchableOpacity onPress={() => deleteQuestion(item.id)} style={styles.deleteButton}>
+                <Icon name="delete" size={24} color="#FFFFFF" />
+                <Text style={styles.deleteButtonText}>Delete</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
         contentContainerStyle={{ paddingBottom: 20 }} // Add some padding at the bottom for the FlatList
@@ -150,18 +164,18 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#4CAF50',
+    color: '#1b5e20',
   },
   input: {
     borderBottomWidth: 1,
     marginBottom: 10,
     padding: 8,
-    borderColor: '#4CAF50',
+    borderColor: '#008080',
     color: '#000',
   },
   picker: {
     marginBottom: 10,
-    borderColor: '#4CAF50',
+    borderColor: '#008080',
     borderWidth: 1,
   },
   textArea: {
@@ -169,7 +183,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     height: 100,
     padding: 8,
-    borderColor: '#4CAF50',
+    borderColor: '#008080',
     color: '#000',
   },
   questionContainer: {
@@ -177,12 +191,12 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#f9f9f9',
     borderRadius: 5,
-    borderColor: '#4CAF50',
+    borderColor: '#008080',
     borderWidth: 1,
   },
   category: {
     fontWeight: 'bold',
-    color: '#4CAF50',
+    color: '#008080',
   },
   questionText: {
     marginTop: 5,
@@ -192,9 +206,41 @@ const styles = StyleSheet.create({
     color: 'gray',
     marginTop: 5,
   },
-  iconContainer: {
+  actionContainer: {
     marginTop: 10,
-    alignItems: 'flex-end', // Align the icon to the right
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  deleteButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FF6347', // Tomato color for the delete button
+    padding: 10,
+    borderRadius: 5,
+  },
+  deleteButtonText: {
+    color: '#FFFFFF',
+    marginLeft: 5, // Space between icon and text
+  },
+  bottomNav: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginVertical: 10,
+    marginTop: 50,
+    marginBottom: 30,
+  },
+  navButton: {
+    backgroundColor: '#008080',
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    marginHorizontal: 5,
+    borderRadius: 5,
+  },
+  navButtonText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 

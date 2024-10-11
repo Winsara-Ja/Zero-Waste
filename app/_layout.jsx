@@ -1,4 +1,7 @@
+
 import React from 'react';
+import { Image } from 'react-native';
+
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -27,6 +30,7 @@ import MyQuestions from './wasteTracking/MyQuestions';
 import Questions from './wasteTracking/Questions';
 import Tips from './wasteTracking/Tips';
 
+
 import GarbageSortPage from './GarbageSort/GarbageSortPage'
 import Step1 from './GarbageSort/Step1'
 import Step2 from './GarbageSort/Step2'
@@ -34,6 +38,11 @@ import Step3 from './GarbageSort/Step3'
 import Step4 from './GarbageSort/Step4'
 import Step5 from './GarbageSort/Step5'
 import Add from './GarbageSort/addStep'
+
+import Shop from './shop';
+import addpost from './addpost'
+// Correct usage of createBottomTabNavigator and createStackNavigator from @react-navigation/stack
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -83,9 +92,14 @@ function StackLayout() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="DailyTracking" component={DailyTracking} options={{ headerShown: false }} />
+
             <Stack.Screen name="WeeklyTracking" component={WeeklyTracking} />
             <Stack.Screen name="MonthlyTracking" component={MonthlyTracking} />
             
+
+            <Stack.Screen name="WeeklyTracking" component={WeeklyTracking} options={{ headerShown: false }} />
+            <Stack.Screen name="MonthlyTracking" component={MonthlyTracking} options={{ headerShown: false }}/>
+
         </Stack.Navigator>
     );
 }
@@ -119,6 +133,7 @@ function StackLayout4() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="HomePage" component={Home} options={{ headerShown: false }} />
+
             <Stack.Screen name="Questions" component={Questions} />
             <Stack.Screen name="MyQuestions" component={MyQuestions} />
             <Stack.Screen name="Tips" component={Tips} />
@@ -129,6 +144,11 @@ function StackLayout4() {
             <Stack.Screen name="Step4" component={Step4} />
             <Stack.Screen name="Step5" component={Step5} />
             <Stack.Screen name="AddStep" component={Add} />
+
+            <Stack.Screen name="Questions" component={Questions} options={{ headerShown: false }}/>
+            <Stack.Screen name="MyQuestions" component={MyQuestions} options={{ headerShown: false }}/>
+            <Stack.Screen name="Tips" component={Tips} options={{ headerShown: false }}/>
+
         </Stack.Navigator>
     );
 }
@@ -147,30 +167,32 @@ function ScheduleStack() {
         <Stack.Navigator>
             <Stack.Screen name="GarbageBinList" component={GarbageBinList} options={{ headerShown: false }} />
             <Stack.Screen name="Schedule" component={Schedule} />
+            <Stack.Screen name="addpost" component={AddProduct} />
         </Stack.Navigator>
     );
 }
 
+
+// Main Layout
 const _layout = () => {
     return (
-        <UserProvider>
-            <NavigationContainer independent={true}>
-                <StatusBar barStyle="dark-content" backgroundColor="#000000" />
-                <Stack.Navigator>
-                    <Stack.Screen
-                        name="Auth"
-                        component={AuthStack}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                        name="Main"
-                        component={TabsLayout}
-                        options={{ headerShown: false }}
-                    />
-                </Stack.Navigator>
-            </NavigationContainer>
-        </UserProvider>
-    );
+        <NavigationContainer independent={true}>
+            <StatusBar barStyle="dark-content" />
+            <Stack.Navigator>
+                <Stack.Screen
+                    name="Auth"
+                    component={AuthStack}
+                    options={{ headerShown: false }} // Hide header for auth screens
+                />
+                <Stack.Screen
+                    name="Main"
+                    component={TabsLayout}
+                    options={{ headerShown: false }} // Hide header for main app screens
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
+    )
 }
 
 export default _layout;
+

@@ -84,7 +84,7 @@ const MonthlyReport = () => {
 
   return (
     <ScrollView style={{ padding: 20 }}>
-      <Text style={{ fontSize: 20 }}>Monthly Report</Text>
+      <Text style={{ fontSize: 30 , marginTop: 50}}>Monthly Report</Text>
 
       {/* Month Selector */}
       <Text style={{ marginVertical: 10 }}>Current Month: {month}</Text>

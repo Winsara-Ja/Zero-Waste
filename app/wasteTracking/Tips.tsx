@@ -17,7 +17,7 @@ interface DailyEntry {
   bins: Bins;
 }
 
-const TipsScreen = () => {
+const TipsScreen = ({ navigation }: any) => {
   const [dailyEntries, setDailyEntries] = useState<DailyEntry[]>([]);
   const [tips, setTips] = useState<string[]>([]);
   const API_KEY = "AIzaSyDaXB37xFGurV9_b7K1URSCIEX5j20I514"; // Replace with your actual API key
@@ -73,6 +73,17 @@ const TipsScreen = () => {
 
   return (
     <View style={styles.container}>
+
+      {/* Navigation bar */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity onPress={() => navigation.navigate('Questions')} style={styles.navButton}>
+          <Text style={styles.navButtonText}>Questions</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Tips')} style={styles.navButton}>
+          <Text style={styles.navButtonText}>Tips</Text>
+        </TouchableOpacity>
+      </View>
+      
       <Text style={styles.title}>Waste Management Tips</Text>
 
       {/* ScrollView to allow scrolling for tips */}
@@ -100,7 +111,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32, // Larger font size for title
     fontWeight: 'bold',
-    color: '#4CAF50', // Green color for title
+    color: '#008080', // Green color for title
     marginBottom: 20,
     textAlign: 'center',
   },
@@ -109,7 +120,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#4CAF50', // Green border for tips container
+    borderColor: '#008080', // Green border for tips container
     marginBottom: 20,
   },
   tip: {
@@ -117,7 +128,7 @@ const styles = StyleSheet.create({
     fontSize: 18, // Slightly larger font size for tips
   },
   button: {
-    backgroundColor: '#4CAF50', // Green background for button
+    backgroundColor: '#008080', // Green background for button
     paddingVertical: 12, // Vertical padding for button
     borderRadius: 8,
     alignItems: 'center',
@@ -127,6 +138,34 @@ const styles = StyleSheet.create({
     fontSize: 18, // Font size for button text
     fontWeight: 'bold',
   },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#1b5e20',
+  },
+  
+  bottomNav: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginVertical: 10,
+    marginTop: 50,
+    marginBottom: 30,
+  },
+  navButton: {
+    backgroundColor: '#008080',
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    marginHorizontal: 5,
+    borderRadius: 5,
+  },
+  navButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
 });
+
 
 export default TipsScreen;
