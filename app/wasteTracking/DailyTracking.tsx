@@ -171,10 +171,17 @@ const DailyTracking = ({navigation}: any) => {
   </View>
 {/* Navigation bar */}
 <View style={styles.bottomNav}>
-  <Button onPress={() => navigation.navigate('DailyTracking')} title='DailyTracking' />
-  <Button onPress={() => navigation.navigate('WeeklyTracking')} title='WeeklyTracking' />
-  <Button onPress={() => navigation.navigate('MonthlyTracking')} title='MonthlyTracking' />
+  <TouchableOpacity onPress={() => navigation.navigate('DailyTracking')} style={styles.navButton}>
+    <Text style={styles.navButtonText}>Daily</Text>
+  </TouchableOpacity>
+  <TouchableOpacity onPress={() => navigation.navigate('WeeklyTracking')} style={styles.navButton}>
+    <Text style={styles.navButtonText}>Weekly</Text>
+  </TouchableOpacity>
+  <TouchableOpacity onPress={() => navigation.navigate('MonthlyTracking')} style={styles.navButton}>
+    <Text style={styles.navButtonText}>Monthly</Text>
+  </TouchableOpacity>
 </View>
+
 
 
 
@@ -244,12 +251,23 @@ const styles = StyleSheet.create({
     marginTop: 20, // Added margin at the top
   },
   bottomNav: {
-    backgroundColor: 'lightgrey',
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-
+    marginVertical: 10,
+  },
+  navButton: {
+    backgroundColor: '#4caf50', // Green background for buttons
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    marginHorizontal: 5,
+    borderRadius: 5,
+  },
+  navButtonText: {
+    color: '#fff', // White text color
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   headerTitle: {
     fontSize: 22,
