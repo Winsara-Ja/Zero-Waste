@@ -34,23 +34,23 @@ const CollectedGarbage = () => {
 
     const renderItem = ({ item }) => (
         <View style={styles.itemContainer}>
-            <Text style={styles.itemText}>Pickup ID: {item.id}</Text>
-            <Text style={styles.itemText}>User Name: {item.user_name}</Text>
-            <Text style={styles.itemText}>Weight Collected: {item.weight}</Text>
-            <Text style={styles.itemText}>Pickup Time: {new Date(item.acceptedAt).toLocaleString()}</Text>
+            <Text style={styles.itemText}>Pickup ID: <Text style={styles.itemValue}>{item.id}</Text></Text>
+            <Text style={styles.itemText}>User Name: <Text style={styles.itemValue}>{item.user_name}</Text></Text>
+            <Text style={styles.itemText}>Weight Collected: <Text style={styles.itemValue}>{item.weight}</Text></Text>
+            <Text style={styles.itemText}>Pickup Time: <Text style={styles.itemValue}>{new Date(item.acceptedAt).toLocaleString()}</Text></Text>
         </View>
     );
 
     return (
         <View style={styles.container}>
             {loading ? (
-                <ActivityIndicator size="large" color="#0000ff" />
+                <ActivityIndicator size="large" color="#008080" />
             ) : (
                 <FlatList
                     data={collectedGarbage}
                     keyExtractor={item => item.id}
                     renderItem={renderItem}
-                    ListEmptyComponent={<Text>No collected garbage records found.</Text>}
+                    ListEmptyComponent={<Text style={styles.emptyText}>No collected garbage records found.</Text>}
                 />
             )}
         </View>
@@ -61,16 +61,35 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+        backgroundColor: '#ffffff',
     },
     itemContainer: {
-        backgroundColor: '#f9f9f9',
+        backgroundColor: '#f0f8f0',
         padding: 15,
         marginVertical: 8,
-        borderRadius: 8,
-        elevation: 1,
+        borderRadius: 10,
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
     },
     itemText: {
         fontSize: 16,
+        color: '#333',
+    },
+    itemValue: {
+        fontWeight: 'bold',
+        color: '#008080',
+    },
+    emptyText: {
+        textAlign: 'center',
+        fontSize: 18,
+        color: '#888',
+        marginTop: 20,
     },
 });
 

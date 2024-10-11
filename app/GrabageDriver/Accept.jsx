@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Alert, StyleSheet } from 'react-native';
-import { getPendingPickups, updatePickupStatus, saveAcceptedPickup } from '../firebaseService'; // Functions for interacting with Firestore
+import { getPendingPickups, updatePickupStatus, saveAcceptedPickup } from '../firebaseService';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -8,11 +8,10 @@ const DriverPickupList = () => {
     const [pendingPickups, setPendingPickups] = useState([]);
     const navigation = useNavigation();
 
-    // Fetch pending pickups from Firebase
     useEffect(() => {
         const fetchPendingPickups = async () => {
             try {
-                const pickups = await getPendingPickups(); // Fetch only pickups with 'pending' status
+                const pickups = await getPendingPickups();
                 setPendingPickups(pickups);
             } catch (error) {
                 console.error('Error fetching pending pickups:', error);
@@ -28,26 +27,24 @@ const DriverPickupList = () => {
 
     const goToPickups = () => {
         navigation.navigate('CollectedGarbage');
-    }
+    };
 
-    // Handle accept action
     const handleAccept = async (pickup) => {
         try {
             await updatePickupStatus(pickup.id, 'accepted');
-            await saveAcceptedPickup(pickup); // Save the accepted pickup to a new collection
+            await saveAcceptedPickup(pickup);
             Alert.alert('Pickup accepted!');
-            setPendingPickups(pendingPickups.filter(item => item.id !== pickup.id)); // Remove the accepted pickup from the list
+            setPendingPickups(pendingPickups.filter(item => item.id !== pickup.id));
         } catch (error) {
             Alert.alert('Error accepting pickup:', error.message);
         }
     };
 
-    // Handle reject action
     const handleReject = async (pickup) => {
         try {
             await updatePickupStatus(pickup.id, 'rejected');
             Alert.alert('Pickup rejected!');
-            setPendingPickups(pendingPickups.filter(item => item.id !== pickup.id)); // Remove the rejected pickup from the list
+            setPendingPickups(pendingPickups.filter(item => item.id !== pickup.id));
         } catch (error) {
             Alert.alert('Error rejecting pickup:', error.message);
         }
@@ -74,69 +71,119 @@ const DriverPickupList = () => {
     );
 
     return (
-        <SafeAreaView>
-            <View>
-                <TouchableOpacity style={styles.navigateButton} onPress={goToLocations}>
-                    <Text style={styles.navigateButtonText}>Go to Location</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.navigateButton} onPress={goToPickups}>
-                    <Text style={styles.navigateButtonText}>View all Pickups</Text>
-                </TouchableOpacity>
-            </View>
+        <SafeAreaView style={styles.container}>
             <FlatList
                 data={pendingPickups}
                 renderItem={renderPickup}
                 keyExtractor={item => item.id}
                 contentContainerStyle={styles.listContainer}
             />
+
+            {/* Buttons in the same row */}
+            <View style={styles.bottomButtonsContainer}>
+                <TouchableOpacity style={styles.smallButton} onPress={goToLocations}>
+                    <Text style={styles.smallButtonText}>Go to Location</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.smallButton} onPress={goToPickups}>
+                    <Text style={styles.smallButtonText}>View all Pickups</Text>
+                </TouchableOpacity>
+            </View>
         </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#f0f4f7',
+    },
     listContainer: {
         padding: 16,
     },
     pickupContainer: {
-        backgroundColor: '#f9f9f9',
-        padding: 15,
-        marginVertical: 8,
-        borderRadius: 8,
-        elevation: 1,
+        backgroundColor: '#fff',
+        padding: 20,
+        marginVertical: 12,
+        borderRadius: 15,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.15,
+        shadowRadius: 6,
+        elevation: 4,
+        borderWidth: 1,
+        borderColor: '#e0e0e0',
     },
     text: {
         fontSize: 16,
-        marginBottom: 5,
+        color: '#333',
+        marginBottom: 8,
     },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        marginTop: 15,
     },
     acceptButton: {
         padding: 10,
-        backgroundColor: '#4CAF50',
-        borderRadius: 5,
+        backgroundColor: '#008080',
+        borderRadius: 8,
+        shadowColor: '#28a745',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 2,
+        flex: 1,
+        marginRight: 10,
+        alignItems: 'center',
     },
     rejectButton: {
         padding: 10,
-        backgroundColor: '#F44336',
-        borderRadius: 5,
-    },
-    navigateButton: {
-        backgroundColor: '#56CCF2',
-        padding: 15,
-        borderRadius: 10,
+        backgroundColor: '#dc3545',
+        borderRadius: 8,
+        shadowColor: '#dc3545',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 2,
+        flex: 1,
+        marginLeft: 10,
         alignItems: 'center',
-        margin: 20,
     },
-    navigateButtonText: {
+    smallButton: {
+        backgroundColor: '#6c757d', // Updated color
+        padding: 10, // Smaller padding for a compact button
+        borderRadius: 8,
+        alignItems: 'center',
+        flex: 1,
+        marginHorizontal: 5,
+        shadowColor: '#6c757d',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 3,
+    },
+    smallButtonText: {
         color: '#fff',
-        fontSize: 16,
+        fontSize: 14, // Smaller text
         fontWeight: 'bold',
     },
+    bottomButtonsContainer: {
+        flexDirection: 'row', // Added to align buttons horizontally
+        paddingVertical: 15,
+        paddingHorizontal: 16,
+        borderTopWidth: 1,
+        borderColor: '#e0e0e0',
+        backgroundColor: '#fff',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: -2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 5,
+    },
     buttonText: {
-        color: 'white',
+        color: '#fff',
         fontSize: 16,
+        fontWeight: '600',
     },
 });
 

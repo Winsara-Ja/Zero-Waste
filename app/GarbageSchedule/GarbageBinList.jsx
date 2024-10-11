@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, Button, FlatList, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Assuming react-navigation is set up
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const bins = [
@@ -13,21 +13,20 @@ const bins = [
 const GarbageBinList = () => {
     const navigation = useNavigation();
 
-    // Function to navigate to details page
     const handleViewDetails = (bin) => {
         navigation.navigate('Schedule', { bin });
     };
 
     const renderBin = ({ item }) => (
         <SafeAreaView>
-            <View className="p-4 bg-gray-200 rounded-lg m-2">
-                <Text className="font-bold">Name: {item.name}</Text>
-                <Text>Waste Type: {item.wasteType}</Text>
-                <Text>Weight: {item.weight}</Text>
-                <Text>Waste Level: {item.wasteLevel}</Text>
+            <View style={styles.card}>
+                <Text style={styles.binName}>{item.name}</Text>
+                <Text style={styles.binDetails}>Waste Type: {item.wasteType}</Text>
+                <Text style={styles.binDetails}>Weight: {item.weight}</Text>
+                <Text style={styles.binDetails}>Waste Level: {item.wasteLevel}</Text>
 
-                <TouchableOpacity className="bg-green-500 rounded-md mt-2" onPress={() => handleViewDetails(item)}>
-                    <Text className="text-white text-center p-2">Schedule</Text>
+                <TouchableOpacity style={styles.scheduleButton} onPress={() => handleViewDetails(item)}>
+                    <Text style={styles.scheduleButtonText}>Schedule</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
@@ -38,9 +37,49 @@ const GarbageBinList = () => {
             data={bins}
             renderItem={renderBin}
             keyExtractor={item => item.id}
-            contentContainerStyle={{ padding: 16 }}
+            contentContainerStyle={styles.container}
         />
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        padding: 16,
+    },
+    card: {
+        backgroundColor: '#f5f5f5', // Light background for the card
+        padding: 16,
+        marginVertical: 2,
+        borderRadius: 12, // Rounded corners
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 4, // For Android shadow
+    },
+    binName: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 8,
+    },
+    binDetails: {
+        fontSize: 16,
+        color: '#555',
+        marginBottom: 5,
+    },
+    scheduleButton: {
+        marginTop: 10,
+        backgroundColor: '#008080', // Modern teal button color
+        borderRadius: 8,
+        paddingVertical: 10,
+        alignItems: 'center',
+    },
+    scheduleButtonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+});
 
 export default GarbageBinList;

@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
-import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore'; // Import deleteDoc and doc
+import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebaseConfig';
 import { useUser } from '../UserContext';
 
 const Garbage = () => {
     const [locations, setLocations] = useState([]);
     const [loading, setLoading] = useState(true);
-
     const { user, userId } = useUser();
 
-    // Fetch locations from Firestore
     useEffect(() => {
         const fetchLocations = async () => {
             try {
@@ -37,11 +35,10 @@ const Garbage = () => {
         fetchLocations();
     }, []);
 
-    // Function to handle deleting a garbage item by its document ID
     const handleDelete = async (id) => {
         try {
-            await deleteDoc(doc(FIREBASE_DB, 'scheduledBins', id)); // Delete the document from Firestore
-            setLocations(locations.filter(item => item.id !== id)); // Update the UI after deletion
+            await deleteDoc(doc(FIREBASE_DB, 'scheduledBins', id));
+            setLocations(locations.filter(item => item.id !== id));
             Alert.alert('Garbage item deleted successfully!');
         } catch (error) {
             Alert.alert('Error deleting garbage item:', error.message);
@@ -65,7 +62,6 @@ const Garbage = () => {
                 <Text style={styles.canceled}>{item.status}</Text>
             )}
 
-            {/* Delete Button */}
             <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.id)}>
                 <Text style={styles.deleteButtonText}>Delete</Text>
             </TouchableOpacity>
@@ -92,55 +88,71 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+        backgroundColor: '#f0f4f7', // Light modern background
     },
     itemContainer: {
-        backgroundColor: '#f9f9f9',
-        padding: 15,
-        marginVertical: 8,
-        borderRadius: 8,
-        elevation: 1,
+        backgroundColor: '#fff',
+        padding: 20,
+        marginVertical: 10,
+        borderRadius: 12,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
+        elevation: 5,
+        borderColor: '#dcdcdc',
+        borderWidth: 1,
     },
     itemText: {
         fontSize: 16,
+        color: '#333', // Softer text color
+        marginBottom: 4,
+        fontFamily: 'System',
     },
     completed: {
-        color: 'black',
+        color: '#fff',
         fontWeight: 'bold',
-        backgroundColor: 'lightgreen',
-        marginTop: 5,
-        padding: 5,
-        borderRadius: 5,
+        backgroundColor: '#008080',
+        marginTop: 10,
+        paddingVertical: 6,
+        borderRadius: 6,
         textAlign: 'center',
     },
     pending: {
-        color: 'black',
+        color: '#000',
         fontWeight: 'bold',
-        backgroundColor: 'yellow',
-        marginTop: 5,
-        padding: 5,
-        borderRadius: 5,
+        backgroundColor: '#FFDC7F',
+        marginTop: 10,
+        paddingVertical: 6,
+        borderRadius: 6,
         textAlign: 'center',
     },
     canceled: {
-        color: 'black',
+        color: '#dc3545',
         fontWeight: 'bold',
-        backgroundColor: 'red',
-        marginTop: 5,
-        padding: 5,
-        borderRadius: 5,
+        backgroundColor: '#f8d7da',
+        marginTop: 10,
+        paddingVertical: 6,
+        borderRadius: 6,
         textAlign: 'center',
     },
     deleteButton: {
         backgroundColor: '#ff5252',
-        padding: 10,
-        marginTop: 10,
-        borderRadius: 5,
+        paddingVertical: 6,
+        paddingHorizontal: 6,
+        marginTop: 12,
+        borderRadius: 8,
         alignItems: 'center',
+        shadowColor: '#ff5252',
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 0.3,
+        shadowRadius: 6,
+        elevation: 4,
     },
     deleteButtonText: {
         color: '#fff',
-        fontWeight: 'bold',
         fontSize: 16,
+        fontWeight: '600',
     },
 });
 
