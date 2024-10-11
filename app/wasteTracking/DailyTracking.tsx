@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     marginBottom: 10,
-    marginTop: 20, // Added margin at the top
+    marginTop: 30, // Added margin at the top
   },
   bottomNav: {
     height: 50,
