@@ -25,6 +25,10 @@ const DriverPickupList = () => {
         navigation.navigate('Locations');
     };
 
+    const goToPickups = () => {
+        navigation.navigate('CollectedGarbage');
+    }
+
     // Handle accept action
     const handleAccept = async (pickup) => {
         try {
@@ -72,7 +76,10 @@ const DriverPickupList = () => {
         <>
             <View>
                 <TouchableOpacity style={styles.navigateButton} onPress={goToLocations}>
-                    <Text style={styles.navigateButtonText}>Go to Garbage</Text>
+                    <Text style={styles.navigateButtonText}>Go to Location</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navigateButton} onPress={goToPickups}>
+                    <Text style={styles.navigateButtonText}>View all Pickups</Text>
                 </TouchableOpacity>
             </View>
             <FlatList

@@ -7,6 +7,7 @@ const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [userId, setUserId] = useState(null); // Changed setUseID to setUserId
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -16,11 +17,13 @@ export const UserProvider = ({ children }) => {
                 const userDoc = await getDoc(userDocRef);
                 if (userDoc.exists()) {
                     setUser(userDoc.data());
+                    setUserId(currentUser.uid); // Set the user ID when user is authenticated
                 } else {
                     console.log('No user document found');
                 }
             } else {
                 setUser(null);
+                setUserId(null); // Reset user ID when no user is authenticated
             }
             setLoading(false);
         });
@@ -29,7 +32,7 @@ export const UserProvider = ({ children }) => {
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, loading }}>
+        <UserContext.Provider value={{ user, userId, loading }}>
             {children}
         </UserContext.Provider>
     );

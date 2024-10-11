@@ -8,7 +8,7 @@ const Garbage = () => {
     const [locations, setLocations] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const { user } = useUser();
+    const { user, userId } = useUser();
 
     // Fetch locations from Firestore
     useEffect(() => {
@@ -19,7 +19,14 @@ const Garbage = () => {
                     id: doc.id,
                     ...doc.data(),
                 }));
-                setLocations(locationData);
+
+                const filteredData = user ? locationData.filter(item => item.userId === userId) : [];
+
+                if (filteredData.length > 0) {
+                    setLocations(filteredData);
+                } else {
+                    console.log('No collected garbage found for the current user.');
+                }
             } catch (error) {
                 console.error('Error fetching locations: ', error);
             } finally {
@@ -46,7 +53,7 @@ const Garbage = () => {
             <Text style={styles.itemText}>Bin ID: {item.bin_id}</Text>
             <Text style={styles.itemText}>Name: {user.name}</Text>
             <Text style={styles.itemText}>Type: {item.Type}</Text>
-            <Text style={styles.itemText}>Weight: {item.weight}Kg</Text>
+            <Text style={styles.itemText}>Weight: {item.weight}</Text>
             <Text style={styles.itemText}>Date: {new Date(item.timestamp).toLocaleDateString()}</Text>
             <Text style={styles.itemText}>Time: {new Date(item.timestamp).toLocaleTimeString()}</Text>
 

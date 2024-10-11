@@ -9,7 +9,7 @@ import { useUser } from './UserContext';
 
 const Schedule = () => {
 
-    const { user, loading } = useUser();
+    const { user, loading, userId } = useUser();
 
     const route = useRoute();
     // const { bin } = route.params;
@@ -65,7 +65,7 @@ const Schedule = () => {
                 });
 
                 // Store location in Firestore
-                await storeUserLocation(latitude, longitude, bin.id, bin.name, bin.wasteType, bin.weight, bin.wasteLevel, status, user.name);
+                await storeUserLocation(latitude, longitude, bin.id, bin.name, bin.wasteType, bin.weight, bin.wasteLevel, status, user.name, userId);
                 Alert.alert('Your Garbage has been scheduled for Pickup');
             }
         } catch (error) {

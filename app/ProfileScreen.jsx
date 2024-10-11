@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet, Image, Button, TouchableOpacity } from 'react-native';
-import { FIREBASE_DB, FIREBASE_AUTH } from '../firebaseConfig';
+import { FIREBASE_DB } from '../firebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+import { useUser } from './UserContext'; // Import your UserContext
+import { useNavigation } from '@react-navigation/native';
 
 const CurrentUserProfile = () => {
-    const [user, setUser] = useState(null);
+    const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const navigation = useNavigation(); // Get the navigation object
+    const { userId } = useUser(); // Get userId from UserContext
+    const navigation = useNavigation();
 
     useEffect(() => {
         const fetchUserDetails = async (uid) => {
@@ -18,7 +19,7 @@ const CurrentUserProfile = () => {
 
                 if (userDoc.exists()) {
                     console.log("User data found in Firestore:", userDoc.data());
-                    setUser(userDoc.data());
+                    setUserData(userDoc.data());
                 } else {
                     console.log('No user document found in Firestore for UID:', uid);
                 }
@@ -29,26 +30,19 @@ const CurrentUserProfile = () => {
             }
         };
 
-        const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (currentUser) => {
-            if (currentUser) {
-                console.log("Authenticated user UID:", currentUser.uid);
-                fetchUserDetails(currentUser.uid);
-            } else {
-                console.log('No user is currently logged in');
-                setLoading(false);
-            }
-        });
-
-        return () => unsubscribe();
-    }, []);
-
-    const goToGarbage = () => {
-        navigation.navigate('Garbage'); // Navigate to the Garbage screen
-    };
+        if (userId) {
+            console.log("Fetching user details for User ID:", userId);
+            fetchUserDetails(userId); // Fetch user data if userId exists
+        } else {
+            console.log("No user is currently logged in");
+            setLoading(false);
+        }
+    }, [userId]); // Dependency array includes userId
 
     const handleSignOut = async () => {
         try {
-            await signOut(FIREBASE_AUTH);
+            // Assuming your signOut function is available in UserContext or similar
+            await signOut(); // Call your sign-out function from context if necessary
             console.log("User signed out successfully.");
             navigation.navigate('Auth', { screen: 'LogInScreen' }); // Redirect to the Login screen
         } catch (error) {
@@ -60,24 +54,24 @@ const CurrentUserProfile = () => {
         return <ActivityIndicator size="large" color="#0000ff" />;
     }
 
-    if (!user) {
+    if (!userData) {
         return <Text>No user data available. Please log in.</Text>;
     }
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>User Profile</Text>
-            {user.profilePicture && (
+            {userData.profilePicture && (
                 <Image
-                    source={{ uri: user.profilePicture }} // Assuming profilePicture is stored in Firestore
+                    source={{ uri: userData.profilePicture }} // Assuming profilePicture is stored in Firestore
                     style={styles.profileImage}
                 />
             )}
-            <Text style={styles.itemText}>Name: {user.name}</Text>
-            <Text style={styles.itemText}>Email: {user.email}</Text>
+            <Text style={styles.itemText}>Name: {userData.name}</Text>
+            <Text style={styles.itemText}>Email: {userData.email}</Text>
             <Button title="Sign Out" onPress={handleSignOut} color="#FF5733" />
             {/* Button to navigate to the Garbage screen */}
-            <TouchableOpacity style={styles.navigateButton} onPress={goToGarbage}>
+            <TouchableOpacity style={styles.navigateButton} onPress={() => navigation.navigate('Garbage')}>
                 <Text style={styles.navigateButtonText}>Go to Garbage</Text>
             </TouchableOpacity>
         </View>
