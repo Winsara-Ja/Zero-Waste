@@ -136,7 +136,7 @@ const DailyTracking = ({navigation}: any) => {
   const updateBinLevel = (type: keyof Bins, change: number) => {
     setBins((prevBins) => {
       const newLevel = Math.min(Math.max(prevBins[type] + change, 0), 100);
-      if (newLevel > 90) {
+      if (newLevel > 80) {
         handleBinOverflow(type);
       }
       return { ...prevBins, [type]: newLevel };
