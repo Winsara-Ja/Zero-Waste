@@ -215,7 +215,7 @@ const MonthlyTracking = ({ navigation }: any) => {
         <Button
           title={showMonthly ? 'Show Daily Data' : 'Show Monthly Data'}
           onPress={handleToggleView}
-          color="#4caf50"
+          color="#008080"
         />
 
         <View style={styles.chartContainer}>
@@ -246,12 +246,13 @@ const MonthlyTracking = ({ navigation }: any) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 26,
+    fontSize: 30,
     fontWeight: '700',
     marginTop: 20,
     marginBottom: 10,
     color: '#1b5e20',
     textAlign: 'center',
+    paddingTop: 50,
   },
   chartContainer: {
     marginTop: 20,
@@ -271,7 +272,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   navButton: {
-    backgroundColor: 'green',
+    backgroundColor: '#008080',
     paddingHorizontal: 30,
     paddingVertical: 10,
     marginHorizontal: 5,

@@ -82,6 +82,15 @@ const Home = () => {
                     <FontAwesome name="plus" size={24} color="white" />
                     <Text style={styles.buttonText}>Add Step</Text>
                 </TouchableOpacity>
+
+                {/* New Button to navigate to Questions */}
+                <TouchableOpacity 
+                    style={styles.button} 
+                    onPress={() => navigation.navigate('Questions')} // Navigate to Questions
+                >
+                    <FontAwesome name="question-circle" size={24} color="white" />
+                    <Text style={styles.buttonText}>Q/A & Tips</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );

@@ -75,8 +75,8 @@ function StackLayout() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="DailyTracking" component={DailyTracking} options={{ headerShown: false }} />
-            <Stack.Screen name="WeeklyTracking" component={WeeklyTracking} />
-            <Stack.Screen name="MonthlyTracking" component={MonthlyTracking} />
+            <Stack.Screen name="WeeklyTracking" component={WeeklyTracking} options={{ headerShown: false }} />
+            <Stack.Screen name="MonthlyTracking" component={MonthlyTracking} options={{ headerShown: false }}/>
         </Stack.Navigator>
     );
 }
@@ -106,9 +106,9 @@ function StackLayout4() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="HomePage" component={Home} options={{ headerShown: false }} />
-            <Stack.Screen name="Questions" component={Questions} />
-            <Stack.Screen name="MyQuestions" component={MyQuestions} />
-            <Stack.Screen name="Tips" component={Tips} />
+            <Stack.Screen name="Questions" component={Questions} options={{ headerShown: false }}/>
+            <Stack.Screen name="MyQuestions" component={MyQuestions} options={{ headerShown: false }}/>
+            <Stack.Screen name="Tips" component={Tips} options={{ headerShown: false }}/>
         </Stack.Navigator>
     );
 }

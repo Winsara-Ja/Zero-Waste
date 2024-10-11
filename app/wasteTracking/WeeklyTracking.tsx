@@ -72,11 +72,12 @@ const WeeklyTracking = ({ navigation }: any) => {
     <ScrollView style={{ padding: 20, flex: 1 }}>
       <Text
         style={{
-          fontSize: 26,
+          fontSize: 30,
           fontWeight: '700',
           marginBottom: 20,
           color: '#1b5e20',
           textAlign: 'center',
+          marginTop: 50,
         }}>
         Weekly Waste Tracking
       </Text>
@@ -122,7 +123,7 @@ const WeeklyTracking = ({ navigation }: any) => {
           key={item.id}
           onPress={() => setSelectedEntry(item)}
           style={{
-            backgroundColor: '#388e3c',
+            backgroundColor: '#008080',
             padding: 16,
             borderRadius: 10,
             marginBottom: 15,
@@ -160,10 +161,10 @@ const WeeklyTracking = ({ navigation }: any) => {
             }}>
             Details for {selectedEntry.date}
           </Text>
-          <Text style={{ color: '#388e3c', marginBottom: 5 }}>Organic: {selectedEntry.bins.Organic}%</Text>
-          <Text style={{ color: '#388e3c', marginBottom: 5 }}>Paper: {selectedEntry.bins.Paper}%</Text>
-          <Text style={{ color: '#388e3c', marginBottom: 5 }}>Glass: {selectedEntry.bins.Glass}%</Text>
-          <Text style={{ color: '#388e3c', marginBottom: 5 }}>Plastic: {selectedEntry.bins.Plastic}%</Text>
+          <Text style={{ color: '#008080', marginBottom: 5 }}>Organic: {selectedEntry.bins.Organic}%</Text>
+          <Text style={{ color: '#008080', marginBottom: 5 }}>Paper: {selectedEntry.bins.Paper}%</Text>
+          <Text style={{ color: '#008080', marginBottom: 5 }}>Glass: {selectedEntry.bins.Glass}%</Text>
+          <Text style={{ color: '#008080', marginBottom: 5 }}>Plastic: {selectedEntry.bins.Plastic}%</Text>
         </View>
       )}
     </ScrollView>
@@ -177,13 +178,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginVertical: 10,
+
   },
   navButton: {
-    backgroundColor: 'green',
+    backgroundColor: '#008080',
     paddingHorizontal: 30,
     paddingVertical: 10,
     marginHorizontal: 5,
     borderRadius: 5,
+
   },
   navButtonText: {
     color: '#fff',

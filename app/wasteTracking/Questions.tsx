@@ -80,12 +80,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff', // White background
     padding: 20,
+    
   },
   header: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
-    color: '#4CAF50', // Green color
+    color: '#1b5e20', // #008080 color
     marginBottom: 10,
+    marginTop: 20,
   },
   listContainer: {
     paddingBottom: 20,
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
   },
   questionName: {
     fontWeight: 'bold',
-    color: 'black', // Green color for the name
+    color: 'black', // #008080 color for the name
   },
   questionText: {
     color: '#333', // Dark gray for question text
@@ -112,9 +114,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginVertical: 10,
+    marginTop: 50,
   },
   navButton: {
-    backgroundColor: 'green',
+    backgroundColor: '#008080',
     paddingHorizontal: 30,
     paddingVertical: 10,
     marginHorizontal: 5,
