@@ -15,6 +15,14 @@ import LoginScreen from './LogInScreen';
 import SignUpScreen from './SignUpScreen';
 import CurrentUserProfile from './ProfileScreen';
 
+import DailyTracking from './wasteTracking/DailyTracking';
+import WeeklyTracking from './wasteTracking/WeeklyTracking';
+import MonthlyTracking from './wasteTracking/MonthlyTracking';
+import MonthlyReport from './wasteTracking/MonthlyReport';
+import MyQuestions from './wasteTracking/MyQuestions';
+import Questions from './wasteTracking/Questions';
+import Tips from './wasteTracking/Tips';
+ 
 // Correct usage of createBottomTabNavigator and createStackNavigator from @react-navigation/stack
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -23,9 +31,10 @@ const Stack = createStackNavigator();
 function TabsLayout() {
     return (
         <Tab.Navigator screenOptions={{ headerShown: false }}>
-            <Tab.Screen name="GarbageBinList" component={StackLayout} />
+            <Tab.Screen name="DailyTracking" component={StackLayout} />
             <Tab.Screen name="DriverPickupList" component={StackLayout3} />
             <Tab.Screen name="Profile" component={StackLayout2} />
+            <Tab.Screen name="Tracking" component={StackLayout4} />
         </Tab.Navigator>
     );
 }
@@ -34,7 +43,7 @@ function TabsLayout() {
 function StackLayout() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="GarbageBins" component={GarbageBinList} options={{ headerShown: false }} />
+            <Stack.Screen name="DailyTracking" component={DailyTracking} options={{ headerShown: false }} />
             <Stack.Screen name="Schedule" component={Schedule} />
         </Stack.Navigator>
     );
@@ -54,6 +63,20 @@ function StackLayout3() {
         <Stack.Navigator>
             <Stack.Screen name="PickupList" component={DriverPickupList} options={{ headerShown: false }} />
             <Stack.Screen name="Locations" component={Locations} />
+        </Stack.Navigator>
+    );
+}
+
+function StackLayout4() {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="DailyTracking" component={DailyTracking} />
+            <Stack.Screen name="WeeklyTracking" component={WeeklyTracking} />
+            <Stack.Screen name="MonthlyTracking" component={MonthlyTracking} />
+            <Stack.Screen name="MonthlyReport" component={MonthlyReport} />
+            <Stack.Screen name="MyQuestions" component={MyQuestions} />
+            <Stack.Screen name="Questions" component={Questions} />
+            <Stack.Screen name="Tips" component={Tips} />
         </Stack.Navigator>
     );
 }
