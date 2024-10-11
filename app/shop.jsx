@@ -1,10 +1,9 @@
 import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState, useRef } from 'react';
-import { db } from '../../firebase/index'; // Firebase configuration
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
+import { FIREBASE_DB } from '../firebaseConfig';
 import { Ionicons } from '@expo/vector-icons'; // Icon library for the plus sign
 import { Link, useNavigation } from 'expo-router'; // Navigation for routing
-import { useNavigation } from '@react-navigation/native';
 
 export default function Shop() {
   const [categories, setCategories] = useState([]);
@@ -16,25 +15,26 @@ export default function Shop() {
   const navigation = useNavigation(); // Navigation instance
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, 'Category'));
-        const categoryList = querySnapshot.docs.map(doc => doc.data());
-        setCategories(categoryList);
-      } catch (error) {
-        console.error("Error fetching categories: ", error);
-      }
-    };
+// When fetching data, use FIREBASE_DB
+const fetchCategories = async () => {
+  try {
+    const querySnapshot = await getDocs(collection(FIREBASE_DB, 'Category'));
+    const categoryList = querySnapshot.docs.map(doc => doc.data());
+    setCategories(categoryList);
+  } catch (error) {
+    console.error("Error fetching categories: ", error);
+  }
+};
 
-    const fetchSliders = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, 'Sliders'));
-        const sliderList = querySnapshot.docs.map(doc => doc.data());
-        setSliders(sliderList);
-      } catch (error) {
-        console.error("Error fetching sliders: ", error);
-      }
-    };
+const fetchSliders = async () => {
+  try {
+    const querySnapshot = await getDocs(collection(FIREBASE_DB, 'Sliders'));
+    const sliderList = querySnapshot.docs.map(doc => doc.data());
+    setSliders(sliderList);
+  } catch (error) {
+    console.error("Error fetching sliders: ", error);
+  }
+};
 
     fetchCategories();
     fetchSliders();
@@ -99,19 +99,18 @@ export default function Shop() {
 
   const renderProductItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() => navigation.navigate('productdetail', { productId: item.id })} // Navigate to product detail page
+      onPress={() => navigation.navigate('productdetail', { productId: item.id })} // Navigate to product detail
     >
       <View style={styles.productItem}>
         <Image
           source={{ uri: item.imageUrl }}
           style={styles.productImage}
         />
-        <Text style={styles.productName}>{item.name}</Text>
-        <Text style={styles.productDescription}>{item.description}</Text>
-        <Text style={styles.productPrice}>${item.price}</Text>
+        <Text style={styles.productName}>{item.name}</Text> {/* Only name displayed */}
       </View>
     </TouchableOpacity>
   );
+  
 
   return (
     <View style={styles.container}>
