@@ -43,7 +43,7 @@ const TabsLayout = () => {
           }}
         />
         <Tabs.Screen
-          name="garbage"
+          name="DailyTracking"
           options={{
             title: 'Garbage',
             tabBarIcon: ({ color, focused }) => (
