@@ -34,8 +34,9 @@ function TabsLayout() {
         <Tab.Navigator screenOptions={{ headerShown: false }}>
             <Tab.Screen name="DailyTracking" component={StackLayout} />
             <Tab.Screen name="DriverPickupList" component={DriverStackLayout} />
+            <Tab.Screen name="Q/A & Tips" component={StackLayout4} />
             <Tab.Screen name="Profile" component={StackLayout2} />
-            <Tab.Screen name="Tracking" component={StackLayout4} />
+            
         </Tab.Navigator>
     );
 }
@@ -46,6 +47,9 @@ function StackLayout() {
         <Stack.Navigator>
             <Stack.Screen name="DailyTracking" component={DailyTracking} options={{ headerShown: false }} />
             <Stack.Screen name="Schedule" component={Schedule} />
+            <Stack.Screen name="WeeklyTracking" component={WeeklyTracking} />
+            <Stack.Screen name="MonthlyTracking" component={MonthlyTracking} />
+            <Stack.Screen name="MonthlyReport" component={MonthlyReport} />
         </Stack.Navigator>
     );
 }
@@ -72,12 +76,8 @@ function DriverStackLayout() {
 function StackLayout4() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="DailyTracking" component={DailyTracking} />
-            <Stack.Screen name="WeeklyTracking" component={WeeklyTracking} />
-            <Stack.Screen name="MonthlyTracking" component={MonthlyTracking} />
-            <Stack.Screen name="MonthlyReport" component={MonthlyReport} />
-            <Stack.Screen name="MyQuestions" component={MyQuestions} />
             <Stack.Screen name="Questions" component={Questions} />
+            <Stack.Screen name="MyQuestions" component={MyQuestions} />
             <Stack.Screen name="Tips" component={Tips} />
         </Stack.Navigator>
     );
