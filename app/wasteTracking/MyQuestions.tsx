@@ -15,7 +15,7 @@ interface Question {
   answer: string; // Placeholder for the answer
 }
 
-const MyQuestions = () => {
+const MyQuestions = ({ navigation }: any) => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [name, setName] = useState(''); // Placeholder for user's name
   const [category, setCategory] = useState('General');
@@ -97,7 +97,18 @@ const MyQuestions = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Submit Your Question</Text>
+
+      {/* Navigation bar */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity onPress={() => navigation.navigate('Questions')} style={styles.navButton}>
+          <Text style={styles.navButtonText}>Questions</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Tips')} style={styles.navButton}>
+          <Text style={styles.navButtonText}>Tips</Text>
+        </TouchableOpacity>
+      </View>
+
+      <Text style={styles.header}>Submit Your Questions</Text>
       <TextInput
         value={name}
         onChangeText={setName}
@@ -195,6 +206,24 @@ const styles = StyleSheet.create({
   iconContainer: {
     marginTop: 10,
     alignItems: 'flex-end', // Align the icon to the right
+  },
+  bottomNav: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginVertical: 10,
+  },
+  navButton: {
+    backgroundColor: 'green',
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    marginHorizontal: 5,
+    borderRadius: 5,
+  },
+  navButtonText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 

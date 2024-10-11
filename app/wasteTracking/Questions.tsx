@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, Alert, TouchableOpacity, StyleSheet } from 'react-native';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebaseConfig'; // Adjust the path as needed
+import Icon from 'react-native-vector-icons/MaterialIcons'; // Importing MaterialIcons
+import { MaterialIcons } from '@expo/vector-icons'; 
 
 // Define types for questions
 interface Question {
@@ -12,7 +14,7 @@ interface Question {
   answer: string; // Assuming the answer is stored in Firestore
 }
 
-const Questions = () => {
+const Questions = ({ navigation }: any) => {
   const [questions, setQuestions] = useState<Question[]>([]);
 
   // Fetch questions from Firestore
@@ -43,7 +45,17 @@ const Questions = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Submitted Questions</Text>
+      {/* Navigation bar */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity onPress={() => navigation.navigate('Questions')} style={styles.navButton}>
+          <Text style={styles.navButtonText}>Questions</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Tips')} style={styles.navButton}>
+          <Text style={styles.navButtonText}>Tips</Text>
+        </TouchableOpacity>
+      </View>
+
+      <Text style={styles.header}>Submitted Questions about Waste Management</Text>
 
       <FlatList
         data={questions}
@@ -51,6 +63,14 @@ const Questions = () => {
         renderItem={renderItem}
         contentContainerStyle={styles.listContainer}
       />
+
+      {/* Floating Pencil Button */}
+      <TouchableOpacity
+        style={styles.floatingButton}
+        onPress={() => navigation.navigate('MyQuestions')} // Replace 'MyQuestions' with the actual route name
+      >
+        <MaterialIcons name="edit" size={30} color="#fff" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -74,17 +94,51 @@ const styles = StyleSheet.create({
     padding: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0', // Light gray border
-    backgroundColor: '#f9f9f9', // Slightly off-white for item background
+    backgroundColor: '#e0f7e0', // Slightly off-white for item background
     borderRadius: 5,
     marginBottom: 10,
   },
   questionName: {
     fontWeight: 'bold',
-    color: '#4CAF50', // Green color for the name
+    color: 'black', // Green color for the name
   },
   questionText: {
     color: '#333', // Dark gray for question text
     marginTop: 5,
+  },
+  bottomNav: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginVertical: 10,
+  },
+  navButton: {
+    backgroundColor: 'green',
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    marginHorizontal: 5,
+    borderRadius: 5,
+  },
+  navButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  floatingButton: {
+    position: 'absolute',
+    bottom: 30,
+    right: 30,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#4CAF50', // Floating button background color
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 5, // Add shadow for Android
+    shadowColor: '#000', // Shadow for iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3.84,
   },
 });
 

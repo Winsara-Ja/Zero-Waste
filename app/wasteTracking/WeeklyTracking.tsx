@@ -1,10 +1,9 @@
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebaseConfig';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-// Define types for bins and entries
 interface Bins {
   Organic: number;
   Paper: number;
@@ -14,15 +13,15 @@ interface Bins {
 
 interface DailyEntry {
   id: string;
-  date: string; // 'YYYY-MM-DD'
+  date: string;
   bins: Bins;
 }
 
-const WeeklyTracking = () => {
-  const [weeklyEntries, setWeeklyEntries] = useState<DailyEntry[]>([]); // Holds entries for the selected week
-  const [selectedDate, setSelectedDate] = useState(new Date()); // To pick a date within the desired week
+const WeeklyTracking = ({ navigation }: any) => {
+  const [weeklyEntries, setWeeklyEntries] = useState<DailyEntry[]>([]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [selectedEntry, setSelectedEntry] = useState<DailyEntry | null>(null); // For showing details of a day
+  const [selectedEntry, setSelectedEntry] = useState<DailyEntry | null>(null);
 
   const handleDateChange = (event: any, selectedDate: Date | undefined) => {
     setShowDatePicker(false);
@@ -32,14 +31,14 @@ const WeeklyTracking = () => {
   };
 
   const getStartOfWeek = (date: Date) => {
-    const dayOfWeek = date.getDay(); // Get current day of the week (0 for Sunday, 6 for Saturday)
-    const diff = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); // Adjust when the week starts on Sunday
-    return new Date(date.setDate(diff)); // Return Monday's date
+    const dayOfWeek = date.getDay();
+    const diff = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+    return new Date(date.setDate(diff));
   };
 
   const getEndOfWeek = (date: Date) => {
-    const startOfWeek = getStartOfWeek(new Date(date)); // Get the start of the week
-    return new Date(startOfWeek.setDate(startOfWeek.getDate() + 6)); // Add 6 days for Sunday
+    const startOfWeek = getStartOfWeek(new Date(date));
+    return new Date(startOfWeek.setDate(startOfWeek.getDate() + 6));
   };
 
   useEffect(() => {
@@ -66,70 +65,131 @@ const WeeklyTracking = () => {
 
   const calculateAverage = (bins: Bins) => {
     const total = bins.Organic + bins.Paper + bins.Glass + bins.Plastic;
-    return total / 4; // Average of the 4 bins
+    return total / 4;
   };
 
   return (
-    <View style={{ padding: 20, backgroundColor: '#ffffff', flex: 1 }}>
-      <Text style={{ fontSize: 24, marginBottom: 10, color: '#2c3e50' }}>Weekly Waste Tracking</Text>
+    <ScrollView style={{ padding: 20, flex: 1 }}>
+      <Text
+        style={{
+          fontSize: 26,
+          fontWeight: '700',
+          marginBottom: 20,
+          color: '#1b5e20',
+          textAlign: 'center',
+        }}>
+        Weekly Waste Tracking
+      </Text>
 
-      {/* Date Picker to select the week */}
+      {/* Navigation bar */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity onPress={() => navigation.navigate('DailyTracking')} style={styles.navButton}>
+          <Text style={styles.navButtonText}>Daily</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('WeeklyTracking')} style={styles.navButton}>
+          <Text style={styles.navButtonText}>Weekly</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('MonthlyTracking')} style={styles.navButton}>
+          <Text style={styles.navButtonText}>Monthly</Text>
+        </TouchableOpacity>
+      </View>
+
       <TouchableOpacity
         onPress={() => setShowDatePicker(true)}
         style={{
-          backgroundColor: '#a8e6cf', // Light green background for the button
-          padding: 10,
-          borderRadius: 5,
-          marginBottom: 10,
-          elevation: 2,
+          backgroundColor: '#66bb6a',
+          paddingVertical: 14,
+          paddingHorizontal: 20,
+          borderRadius: 10,
+          marginBottom: 20,
+          alignItems: 'center',
+          shadowColor: '#000',
+          shadowOpacity: 0.15,
+          shadowRadius: 10,
+          elevation: 5,
         }}>
-        <Text style={{ color: '#2c3e50' }}>
+        <Text style={{ color: '#ffffff', fontSize: 16, fontWeight: '600' }}>
           Select Week: {getStartOfWeek(selectedDate).toDateString()} - {getEndOfWeek(selectedDate).toDateString()}
         </Text>
       </TouchableOpacity>
 
       {showDatePicker && (
-        <DateTimePicker
-          value={selectedDate}
-          mode="date"
-          display="default"
-          onChange={handleDateChange}
-        />
+        <DateTimePicker value={selectedDate} mode="date" display="default" onChange={handleDateChange} />
       )}
 
-      {/* Show Daily Entries */}
-      <FlatList
-        data={weeklyEntries}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            onPress={() => setSelectedEntry(item)}
-            style={{
-              backgroundColor: '#dcedc8', // Light green for the item background
-              padding: 15,
-              borderRadius: 5,
-              marginVertical: 5,
-              elevation: 1,
-            }}>
-            <Text style={{ color: '#2c3e50' }}>
-              Day {index + 1} average percentage: {calculateAverage(item.bins).toFixed(2)}%
-            </Text>
-          </TouchableOpacity>
-        )}
-      />
+      {weeklyEntries.map((item, index) => (
+        <TouchableOpacity
+          key={item.id}
+          onPress={() => setSelectedEntry(item)}
+          style={{
+            backgroundColor: '#388e3c',
+            padding: 16,
+            borderRadius: 10,
+            marginBottom: 15,
+            shadowColor: '#000',
+            shadowOpacity: 0.1,
+            shadowRadius: 5,
+            elevation: 3,
+          }}>
+          <Text style={{ color: '#ffffff', fontWeight: '500', fontSize: 16 }}>
+            Day {index + 1} - Average Bin Usage: {calculateAverage(item.bins).toFixed(2)}%
+          </Text>
+        </TouchableOpacity>
+      ))}
 
-      {/* Show detailed garbage levels when a day is selected */}
       {selectedEntry && (
-        <View style={{ marginTop: 20, padding: 10, backgroundColor: '#ffffff', borderRadius: 5, elevation: 1 }}>
-          <Text style={{ fontSize: 18, color: '#2c3e50' }}>Details for {selectedEntry.date}</Text>
-          <Text style={{ color: '#2c3e50' }}>Organic: {selectedEntry.bins.Organic}%</Text>
-          <Text style={{ color: '#2c3e50' }}>Paper: {selectedEntry.bins.Paper}%</Text>
-          <Text style={{ color: '#2c3e50' }}>Glass: {selectedEntry.bins.Glass}%</Text>
-          <Text style={{ color: '#2c3e50' }}>Plastic: {selectedEntry.bins.Plastic}%</Text>
+        <View
+          style={{
+            marginTop: 20,
+            marginBottom: 40,
+            padding: 20,
+            backgroundColor: '#ffffff',
+            borderRadius: 10,
+            elevation: 5,
+            shadowColor: '#000',
+            shadowOpacity: 0.1,
+            shadowRadius: 5,
+          }}>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: '600',
+              color: '#1b5e20',
+              marginBottom: 10,
+              textAlign: 'center',
+            }}>
+            Details for {selectedEntry.date}
+          </Text>
+          <Text style={{ color: '#388e3c', marginBottom: 5 }}>Organic: {selectedEntry.bins.Organic}%</Text>
+          <Text style={{ color: '#388e3c', marginBottom: 5 }}>Paper: {selectedEntry.bins.Paper}%</Text>
+          <Text style={{ color: '#388e3c', marginBottom: 5 }}>Glass: {selectedEntry.bins.Glass}%</Text>
+          <Text style={{ color: '#388e3c', marginBottom: 5 }}>Plastic: {selectedEntry.bins.Plastic}%</Text>
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  bottomNav: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginVertical: 10,
+  },
+  navButton: {
+    backgroundColor: 'green',
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    marginHorizontal: 5,
+    borderRadius: 5,
+  },
+  navButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
 
 export default WeeklyTracking;
