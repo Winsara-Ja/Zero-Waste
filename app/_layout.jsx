@@ -30,7 +30,6 @@ import MyQuestions from './wasteTracking/MyQuestions';
 import Questions from './wasteTracking/Questions';
 import Tips from './wasteTracking/Tips';
 
-
 import GarbageSortPage from './GarbageSort/GarbageSortPage'
 import Step1 from './GarbageSort/Step1'
 import Step2 from './GarbageSort/Step2'
@@ -62,7 +61,10 @@ function TabsLayout() {
                         iconName = focused ? 'trash' : 'trash-outline';
                     } else if (route.name === 'Profile') {
                         iconName = focused ? 'person' : 'person-outline';
+                    } else if (route.name === 'ChatApp') {
+                        iconName = focused ? 'chatbox' : 'chatbox-outline';
                     }
+
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
                 tabBarActiveTintColor: '#008080',
@@ -84,6 +86,7 @@ function TabsLayout() {
             <Tab.Screen name="DailyTracking" component={StackLayout} />
             <Tab.Screen name="GarbageBins" component={ScheduleStack} />
             <Tab.Screen name="Profile" component={StackLayout2} />
+            <Tab.Screen name="ChatApp " component={GeminiChat} />
         </Tab.Navigator>
     );
 }
@@ -95,10 +98,10 @@ function StackLayout() {
 
             <Stack.Screen name="WeeklyTracking" component={WeeklyTracking} />
             <Stack.Screen name="MonthlyTracking" component={MonthlyTracking} />
-            
+
 
             <Stack.Screen name="WeeklyTracking" component={WeeklyTracking} options={{ headerShown: false }} />
-            <Stack.Screen name="MonthlyTracking" component={MonthlyTracking} options={{ headerShown: false }}/>
+            <Stack.Screen name="MonthlyTracking" component={MonthlyTracking} options={{ headerShown: false }} />
 
         </Stack.Navigator>
     );
@@ -117,9 +120,11 @@ function StackLayout2() {
             <Stack.Screen name="PickupList" component={DriverPickupList} options={{ headerShown: false }} />
             <Stack.Screen name="Locations" component={Locations} />
             <Stack.Screen name="CollectedGarbage" component={CollectedGarbage} />
+
         </Stack.Navigator>
     );
 }
+
 
 // function DriverStackLayout() {
 //     return (
@@ -145,11 +150,11 @@ function StackLayout4() {
             <Stack.Screen name="Step5" component={Step5} />
             <Stack.Screen name="AddStep" component={Add} />
 
-            <Stack.Screen name="Questions" component={Questions} options={{ headerShown: false }}/>
-            <Stack.Screen name="MyQuestions" component={MyQuestions} options={{ headerShown: false }}/>
-            <Stack.Screen name="Tips" component={Tips} options={{ headerShown: false }}/>
+            <Stack.Screen name="Questions" component={Questions} options={{ headerShown: false }} />
+            <Stack.Screen name="MyQuestions" component={MyQuestions} options={{ headerShown: false }} />
+            <Stack.Screen name="Tips" component={Tips} options={{ headerShown: false }} />
 
-        </Stack.Navigator>
+        </Stack.Navigator >
     );
 }
 

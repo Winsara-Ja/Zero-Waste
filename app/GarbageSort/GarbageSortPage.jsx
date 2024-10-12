@@ -5,6 +5,7 @@ import { Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins'
 import { createStackNavigator } from '@react-navigation/stack';
 import GarbageNamePicker from './GarbageNamePicker'; // Adjust path
 import { getDocs, collection } from 'firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
 import { FIREBASE_DB } from '../../firebaseConfig'; // Adjust path
 import { Link } from 'expo-router';
 // Import Step Components
@@ -22,6 +23,7 @@ const MyComponent = () => {
   const [steps, setSteps] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const navigation = useNavigation();
   // Load the fonts
   const [fontsLoaded] = useFonts({
     Poppins_400Regular, // Normal weight font
@@ -62,7 +64,8 @@ const MyComponent = () => {
     return (
       <View style={styles.container}>
         {/* Navigate to ChatApp when the GIF image is pressed */}
-        <TouchableOpacity> 
+        <TouchableOpacity onPress={() => navigation.navigate('Main', { screen: 'ChatApp' })}
+        >
           <Image
             source={require('../../assets/images/chat-bot.gif')} // Adjust path to your GIF
             style={styles.gifImage}

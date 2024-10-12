@@ -43,7 +43,7 @@ const MyQuestions = ({ navigation }: any) => {
   const generateAnswer = async (questionText: string) => {
     const genAI = new GoogleGenerativeAI.GoogleGenerativeAI(API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    
+
     try {
       const result = await model.generateContent(questionText);
       const responseText = result.response.text().replace(/[*]/g, "").replace(/[^\w\s,.!?]/g, ""); // Clean response
@@ -73,7 +73,7 @@ const MyQuestions = ({ navigation }: any) => {
 
       // Generate an answer for the question
       const answer = await generateAnswer(question);
-      
+
       // Update the question document with the generated answer
       await updateDoc(doc(FIREBASE_DB, 'questions', questionDoc.id), { answer });
 

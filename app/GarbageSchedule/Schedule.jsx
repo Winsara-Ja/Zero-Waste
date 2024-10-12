@@ -42,7 +42,7 @@ const Schedule = () => {
                 });
             }
         })();
-    }, []);
+    }, [location]);
 
     const getCurrentLocation = async () => {
         try {

@@ -83,7 +83,11 @@ const TipsScreen = ({ navigation }: any) => {
           <Text style={styles.navButtonText}>Tips</Text>
         </TouchableOpacity>
       </View>
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> 5d2d1a8 (errors fixed in merging)
       <Text style={styles.title}>Waste Management Tips</Text>
 
       {/* ScrollView to allow scrolling for tips */}
@@ -144,7 +148,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: '#1b5e20',
   },
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> 5d2d1a8 (errors fixed in merging)
   bottomNav: {
     height: 50,
     justifyContent: 'center',

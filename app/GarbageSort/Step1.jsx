@@ -44,10 +44,16 @@ const Step1 = ({ route, navigation }) => {
   return (
     <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
       <Text style={styles.title}>Garbage: {selectedGarbage}</Text>
-      
+
       {/* Display the first instruction */}
       <Text style={styles.stepText}>Step 1:</Text>
       <Text style={styles.instruction}>{steps[0]}</Text>
+      <TouchableOpacity
+        style={styles.prevButton}
+        onPress={() => navigation.navigate('GarbageBinList', { screen: 'GarbageSort' })} // Navigate to SelectPage
+      >
+        <Icon name="arrow-back" size={24} color="white" />
+      </TouchableOpacity>
 
       {/* Add Image here with scaling animation */}
       <Animated.Image
@@ -55,7 +61,12 @@ const Step1 = ({ route, navigation }) => {
         style={[styles.image, { transform: [{ scale: scaleAnim }] }]} // Apply scale animation
         resizeMode="contain" // Adjust how the image is resized to fit the container
       />
-
+      <TouchableOpacity
+        style={styles.nextButton}
+        onPress={() => navigation.navigate('Step2', { selectedGarbage, steps })}
+      >
+        <Icon name="arrow-forward" size={24} color="white" />
+      </TouchableOpacity>
       {/* Progress bar wrapped in a view for rounded corners */}
       <View style={styles.progressBarWrapper}>
         <ProgressBar progress={progress} color="green" style={styles.progressBar} />
@@ -64,15 +75,10 @@ const Step1 = ({ route, navigation }) => {
       {/* Button container to hold both buttons in a row */}
       <View style={styles.buttonContainer}>
         {/* Previous Step Button */}
-       
+
 
         {/* Next Step Button with Right Arrow */}
-        <TouchableOpacity 
-          style={styles.nextButton}
-          onPress={() => navigation.navigate('Step2', { selectedGarbage, steps })}
-        >
-          <Icon name="arrow-forward" size={24} color="white" />
-        </TouchableOpacity>
+
       </View>
     </Animated.View>
   );
@@ -142,7 +148,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Center the icon horizontally
     backgroundColor: 'green', // Button background color for next
     borderRadius: 30, // Half of width/height for a circular shape
-    marginLeft:300
+    marginLeft: 300
   },
 });
 

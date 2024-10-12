@@ -49,6 +49,12 @@ const Step4 = ({ route, navigation }) => {
       {/* Display the fourth instruction */}
       <Text style={styles.stepText}>Step 4:</Text>
       <Text style={styles.instruction}>{steps[3]}</Text>
+      <TouchableOpacity
+        style={styles.nextButton}
+        onPress={() => navigation.navigate('Step5', { selectedGarbage, steps })}
+      >
+        <Icon name="arrow-forward" size={24} color="white" />
+      </TouchableOpacity>
 
       {/* Add Image here with scaling animation */}
       <Animated.Image
@@ -65,7 +71,7 @@ const Step4 = ({ route, navigation }) => {
       {/* Button container to hold both buttons in a row */}
       <View style={styles.buttonContainer}>
         {/* Previous Step Button */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.prevButton}
           onPress={() => navigation.navigate('Step3', { selectedGarbage, steps })} // Navigate to Step 3
         >
@@ -73,12 +79,7 @@ const Step4 = ({ route, navigation }) => {
         </TouchableOpacity>
 
         {/* Next Step Button with Right Arrow */}
-        <TouchableOpacity 
-          style={styles.nextButton}
-          onPress={() => navigation.navigate('Step5', { selectedGarbage, steps })}
-        >
-          <Icon name="arrow-forward" size={24} color="white" />
-        </TouchableOpacity>
+
       </View>
     </Animated.View>
   );

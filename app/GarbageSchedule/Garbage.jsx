@@ -33,7 +33,7 @@ const Garbage = () => {
         };
 
         fetchLocations();
-    }, []);
+    }, [locations]);
 
     const handleDelete = async (id) => {
         try {

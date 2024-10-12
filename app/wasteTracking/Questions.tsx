@@ -3,7 +3,11 @@ import { View, Text, FlatList, Alert, TouchableOpacity, StyleSheet } from 'react
 import { collection, onSnapshot } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebaseConfig'; // Adjust the path as needed
 import Icon from 'react-native-vector-icons/MaterialIcons'; // Importing MaterialIcons
+<<<<<<< HEAD
 import { MaterialIcons } from '@expo/vector-icons'; 
+=======
+import { MaterialIcons } from '@expo/vector-icons';
+>>>>>>> 5d2d1a8 (errors fixed in merging)
 
 // Define types for questions
 interface Question {
@@ -80,7 +84,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff', // White background
     padding: 20,
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 5d2d1a8 (errors fixed in merging)
   },
   header: {
     fontSize: 30,

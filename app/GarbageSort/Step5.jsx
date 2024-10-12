@@ -47,9 +47,16 @@ const Step5 = ({ route, navigation }) => {
   return (
     <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
       <Text style={styles.title}>Garbage: {selectedGarbage}</Text>
-      
+
       {/* Display the fifth instruction */}
       <Text style={styles.text}>Step 5: {steps[4]}</Text>
+      <TouchableOpacity
+        style={styles.homeButton}
+        onPress={() => navigation.navigate('Home')} // Navigate back to home or any screen after the last step
+      >
+        <HomeIcon name="home" size={24} color="white" />
+        <Text style={styles.homeButtonText}>Home</Text>
+      </TouchableOpacity>
 
       {/* Add Image here with scaling animation */}
       <Animated.Image
@@ -69,7 +76,7 @@ const Step5 = ({ route, navigation }) => {
       {/* Button container to hold both buttons in a row */}
       <View style={styles.buttonContainer}>
         {/* Go Back Button */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.navigate('Step4', { selectedGarbage, steps })} // Navigate to Step 4
         >
@@ -77,7 +84,7 @@ const Step5 = ({ route, navigation }) => {
         </TouchableOpacity>
 
         {/* Go to Home Button with Home Icon */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.homeButton}
           onPress={() => navigation.navigate('HomePage')} // Navigate back to home or any screen after the last step
         >
@@ -160,7 +167,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 10, // Space between icon and text
     fontFamily: 'Poppins_600SemiBold', // Use Poppins semi-bold
-    paddingTop:4
+    paddingTop: 4
   },
 });
 
