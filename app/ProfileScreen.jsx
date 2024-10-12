@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const headerImage = require('../assets/images/bg2.png');
+const headerImage = require('../assets/images/bg3.png');
 const placeholderImage = require('../assets/images/man.png');
 
 const CurrentUserProfile = () => {
